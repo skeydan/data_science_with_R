@@ -1,0 +1,319 @@
+<style>
+
+.reveal section img {
+  border: 0px;
+  box-shadow: 0 0 0 0;
+}
+.reveal table td {
+  border: 0px;
+}
+
+.reveal table {
+  border: 0px;
+}
+
+.reveal h1 {
+  font-size: 2em;
+}
+
+.reveal h3 {
+  font-size: 1.4em;
+}
+
+.reveal h4 {
+  font-size: 1.2em;
+}
+
+.reveal figcaption {
+  font-size: 0.4em;
+}
+
+.smallcode pre code {
+  font-size: 1em;
+}
+
+.reveal .smalltext {
+  font-size: 0.8em;
+}
+
+</style>
+
+
+Data Science with R
+========================================================
+author: Sigrid Keydana, Trivadis
+date: 
+autosize: true
+
+Agenda
+========================================================
+class:smalltext
+
+&nbsp;
+
+### Part 1: Concepts, basics, methods
+
+1. Statistics, data mining, predictive analytics, data science, machine learning, deep learning... what???
+2. Introduction to statistical modeling: supervised vs. unsupervised, regression vs. classification, prediction vs. inference 
+2. R for data science
+3. Exploratory data analysis and visualization
+4. From visualization to models (modelr & hadley case studies)
+5. Important concepts in statistical modeling: overfitting, bias/variance and model selection
+4. Some statistical background
+6. Introduction to supervised learning: regression, decision trees, support vector machines
+7. Introduction to unsupervised learning: clustering, principal components analysis
+8. 
+
+### Part 2: Case study: from data to models
+
+fraud  detection
+
+
+========================================================
+type:prompt
+
+&nbsp; 
+
+&nbsp; 
+
+<h1>
+Introduction to statistical modeling
+</h1>
+
+
+Example: Advertising
+========================================================
+
+&nbsp;
+
+Does advertising help sales? How much? What about the different channels - should we advertise on TV? Radio? Newspapers?
+
+<figure>
+<img src="2.1.jpg">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+Example: Income
+========================================================
+
+&nbsp;
+
+Does income increase with education? How much?
+
+<figure>
+<img src="2.2.jpg">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+
+
+
+Example: Clustering gene expression measurements for cancer cells
+========================================================
+
+&nbsp;
+
+<figure>
+<img src="1.4.jpg">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+
+
+
+Supervised and unsupervised learning
+========================================================
+
+&nbsp;
+
+#### Supervised learning
+
+- goal: learn a function from input to output, &nbsp;&nbsp;&nbsp; $y = f(x)$
+- workflow: train on _training set_ (and possibly, validation set), test performance on _test set_
+- for both training and test set, $x$ and $y$ are given (ground truth)
+
+#### Unsupervised learning
+
+- goal: find patterns (groups, clusters...) in a dataset
+- $x$ is given, but $y$ is not
+
+
+Regression and classification
+========================================================
+
+#### Regression
+
+- output variable is quantitative
+    - predict weight from height
+    - predict house price from habitable surface and location
+    - predict income from parents' income
+    
+#### Classification
+
+- output variable is qualitative
+    - predict credit card default
+    - predict disease yes/no
+    - predict intervention success
+
+
+Prediction vs. inference
+========================================================
+
+&nbsp;
+
+What's more important: 
+
+- predict a new $\hat y$ as accurately as possible?
+- model the underlying relationship between $x$ and$y$?
+- _explain_ $y$ by $x$?
+
+
+
+Parametric vs. nonparametric methods
+========================================================
+
+&nbsp;
+
+#### parametric
+
+- assume a specific form for $f$ in $y = f(x)$
+- e.g., linear regression: $f(x) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_p x_p$
+- then, estimate the $\beta_0, \beta_1 ... \beta_p$
+- functions with few parameters may be too unflexible to model the true $f$
+- functions with many parameters may _overfit_ on the training data (more on overfitting later)
+
+#### nonparametric
+
+- no explicit assumptions about the underlying $f$
+- more flexible than parametric methods, but also more prone to _overfitting_
+
+
+Prediction accuracy vs. model interpretability
+========================================================
+
+&nbsp;
+
+
+========================================================
+
+========================================================
+
+========================================================
+
+========================================================
+
+========================================================
+
+
+
+
+========================================================
+type:prompt
+
+&nbsp; 
+
+&nbsp; 
+
+<h1>
+R for data science
+</h1>
+
+
+From S to R
+========================================================
+class:smalltext
+
+&nbsp;
+
+#### Before there was R, there was S
+
+- Statistical computing language developed at Bell Laboratories by John Chambers et al. (1976)
+- Major versions S3 and S4
+- Mission statement: _turn ideas into software, quickly and faithfully_
+
+#### S-PLUS
+
+- Commercial version of S with eventful history (as of today, integrated into Tibco Spotfire)
+
+#### R
+
+- Developed by Ross Ithaka and Robert Gentleman at University of Auckland (1995-2000)
+- Syntax and object system from S, scoping rules and environment model from Scheme 
+- Released under GNU Public License (GPL)
+
+
+The R ecosystem
+========================================================
+
+&nbsp;
+
+- CRAN (Comprehensive R Archive Network): repository with more than 10,000 user-contributed packages
+- RStudio: most popular R IDE (can do “everything” in RStudio)
+- If you can just choose one person to stand for it all: Hadley Wickham (Chief Scientist at RStudio), creator of the _tidyverse_
+- Books: many. We will partly use examples from _R for Data Science_ by the above Hadley Wickham 
+
+
+Why R (for data science)
+========================================================
+
+&nbsp;
+
+- basically every statistical or machine learning algorithm is implemented in R
+- even if you have to implement a new algorithm yourself, you can build upon a strong fundament (optimization, matrix computations ...)
+- elegant, concise syntax, esp. when using packages from the _tidyverse_
+- quickly try out things and experiment on the (RStudio) Console
+- beautiful graphics
+- (personal opinion) programming R is fun!
+
+
+Getting started with R (1)
+========================================================
+class:smallcode
+
+&nbsp;
+
+#### Basic data types and assignment
+
+```{r, results="hide" }
+2      # a number
+class(2)
+2.0    # the same number
+class(2.0)
+
+"two"  # a string (character vector)
+'two'  # can also use single quotes
+
+TRUE == FALSE # boolean datatype, called logical in R
+
+x <- 1 # assignment
+x
+y = 2 # can also use =
+
+```
+
+
+Getting started with R (2)
+========================================================
+class:smallcode
+
+&nbsp;
+
+#### Data structure
+
+```{r, results="hide" }
+z <- c(1,2,3) # a vector of doubles
+zz <- c("a", "b", "c") # a vector of character strings
+
+# actually, all objects are non-scalars, there is no real difference
+length(c(1,2,3))
+
+
+zzz <- factor(zz) # a factor (for categorical data)
+
+```
