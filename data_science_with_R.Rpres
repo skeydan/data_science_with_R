@@ -55,14 +55,16 @@ class:smalltext
 
 1. Statistics, data mining, predictive analytics, data science, machine learning, deep learning... what???
 2. Introduction to statistical modeling: supervised vs. unsupervised, regression vs. classification, prediction vs. inference 
-2. R for data science
-3. Exploratory data analysis and visualization
+3. R for data science
+4. Exploratory data analysis and visualization
 4. From visualization to models (modelr & hadley case studies)
 5. Important concepts in statistical modeling: overfitting, bias/variance and model selection
-4. Some statistical background
-6. Introduction to supervised learning: regression, decision trees, support vector machines
-7. Introduction to unsupervised learning: clustering, principal components analysis
-8. 
+6. Some statistical background
+7. Introduction to supervised learning (1): Linear regression
+8. Introduction to supervised learning (2): Classification using decision trees
+9. Algorithms for classification and/or regression: Logistic regression, support vector machines, k-nearest-neighbours
+10. Ensemble methods
+11. Introduction to unsupervised learning: clustering, principal components analysis
 
 ### Part 2: Case study: from data to models
 
@@ -147,6 +149,8 @@ Supervised and unsupervised learning
 Regression and classification
 ========================================================
 
+&nbsp;
+
 #### Regression
 
 - output variable is quantitative
@@ -170,8 +174,7 @@ Prediction vs. inference
 What's more important: 
 
 - predict a new $\hat y$ as accurately as possible?
-- model the underlying relationship between $x$ and$y$?
-- _explain_ $y$ by $x$?
+- model the underlying relationship between $x$ and $y$ (or even: _explain_ $y$ by $x$?)
 
 
 
@@ -180,7 +183,7 @@ Parametric vs. nonparametric methods
 
 &nbsp;
 
-#### parametric
+#### Parametric
 
 - assume a specific form for $f$ in $y = f(x)$
 - e.g., linear regression: $f(x) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_p x_p$
@@ -188,7 +191,7 @@ Parametric vs. nonparametric methods
 - functions with few parameters may be too unflexible to model the true $f$
 - functions with many parameters may _overfit_ on the training data (more on overfitting later)
 
-#### nonparametric
+#### Non-parametric
 
 - no explicit assumptions about the underlying $f$
 - more flexible than parametric methods, but also more prone to _overfitting_
@@ -198,6 +201,15 @@ Prediction accuracy vs. model interpretability
 ========================================================
 
 &nbsp;
+
+By method
+
+<figure>
+<img src="2.7.jpg">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
 
 
 ========================================================
@@ -317,3 +329,305 @@ length(c(1,2,3))
 zzz <- factor(zz) # a factor (for categorical data)
 
 ```
+
+
+
+
+========================================================
+type:prompt
+
+&nbsp; 
+
+&nbsp; 
+
+<h1>
+Important concepts in statistical modeling
+</h1>
+
+
+Training error, test error, and overfitting
+========================================================
+
+&nbsp;
+
+A model that minimizes training error but incurs high test error is said to _overfit_ the training data.
+
+While good performance on the training set is nice, the thing we really care about is _low error on the test set_ (low _generalization error_).
+
+<figure>
+<img src="2.9.jpg">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+Example: three fits (true data in black) with corresponding training and test errors
+
+There is no such thing as overall optimal complexity (1)
+========================================================
+
+&nbsp;
+
+Three unequal-complexity models with training and test errors
+
+_moderately nonlinear data_
+
+<figure>
+<img src="2.9.jpg">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+Example: three fits (true data in black) with corresponding training and test errors
+
+There is no such thing as overall optimal complexity (2)
+========================================================
+
+&nbsp;
+
+Three unequal-complexity models with training and test errors
+
+_highly linear data_
+
+<figure>
+<img src="2.10.jpg">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+Example: three fits (true data in black) with corresponding training and test errors
+
+There is no such thing as overall optimal complexity (3)
+========================================================
+
+&nbsp;
+
+Three unequal-complexity models with training and test errors
+
+_very nonlinear data_
+
+<figure>
+<img src="2.11.jpg">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+Example: three fits (true data in black) with corresponding training and test errors
+
+How to prevent overfitting
+========================================================
+
+&nbsp;
+
+- use cross-validation to determine optimal model complexity 
+- penalize more complex models (regularization)
+
+We'll cover cross validation below and see regularization later.
+
+
+Bias-variance tradeoff (1)
+========================================================
+
+&nbsp;
+
+The expected test error decomposes into 3 separate components:
+
+- the _variance_ of the estimator due to sample variation
+- the _bias_ due to approximating the true relationship with a simplification
+- the noise variance (irreducible error)
+
+&nbsp;
+
+$E(y_0 - \hat f(x_0))^2 = var(\hat f(x_0)) + (bias(\hat f(x_0)))^2 + var(\epsilon)$
+
+
+Bias-variance tradeoff (2)
+========================================================
+
+&nbsp;
+
+<figure>
+<img src="2.12.jpg">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+Test MSE, with its three components variance, bias and irreducible error, vs. _flexibility_, for the three scenarios above. 
+Dashed line is irreducible error.
+
+
+Model selection
+========================================================
+
+&nbsp;
+
+How do we select the best model?
+
+The most common approach is _cross-validation_.
+
+(Another is imposing priors / using regularization).
+
+
+How cross-validation works
+========================================================
+
+&nbsp;
+
+Example: 5-fold cross-validation.
+
+<figure>
+<img src="5.5.jpg">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+========================================================
+type:prompt
+
+&nbsp; 
+
+&nbsp; 
+
+<h1>
+Supervised learning: linear regression
+</h1>
+
+
+What is the effect of advertising on sales?
+========================================================
+
+&nbsp;
+
+In simple (= single-predictor) linear regression we fit a line to the data:
+
+$\hat y = \beta_0 + \beta_1 x$
+
+<figure>
+<img src="2.1.jpg">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+How do we estimate the coefficients?
+========================================================
+
+&nbsp;
+
+The most common approach by far is _least squares_ where we minimize the _residual sum of squares_
+
+$(y_1 - \hat \beta_0 - \hat \beta_1 x_1)^2 + (y_2 - \hat \beta_0 - \hat \beta_1 x_2)^2 + ... + (y_n - \hat \beta_0 - \hat \beta_1 x_n)^2$
+
+<figure>
+<img src="3.1.jpg">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+Which gives the estimates
+========================================================
+
+&nbsp;
+
+
+$\hat \beta_0 = \bar y - \hat \beta_1 \bar x$ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+$\hat \beta_1 = cor(y, x) \frac{sd(y)}{sd(x)}$
+
+&nbsp;
+
+That means, the slope of the line
+
+- gets steeper when $x$ and $y$ are more correlated
+- gets steeper when there's more variation in the $y$'s
+- gets shallower when there's more variation in the $x$'s
+
+How good is the model fit?
+========================================================
+
+&nbsp;
+
+Model performance in the one-predictor case is usually assessed by calculating the proportion of variance explained:
+
+$R^2 = \frac{total sum of squares - residual sum of squares}{total sum of squares} = 1 - \frac{residual sum of squares}{total sum of squares}$
+
+This $R^2$ is the square of the correlation coefficient $R$.
+
+
+Multiple predictors
+========================================================
+
+&nbsp;
+
+With n predictors, we don't fit a line any more, but an n-dimensional hyperplane.
+
+This is an example of the regression of a hypothetical $y$ on two hypothetical predictors $x_1$ and $x_2$.
+
+<figure>
+<img src="3.4.jpg">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+What it means
+========================================================
+
+&nbsp;
+
+In multiple regression, a predictor is tested for its impact _holding all other predictors fixed_.
+
+Example: When it's very hot, ice cream sales go up and car accidents, too.
+Does ice cream consumption lead to more accidents?
+
+No. Extremely hot temperatures make people aggressive, leading to more accident-prone behavior.
+Probably no big role for ice cream here.
+
+
+Assessing model performance in multiple linear regression
+========================================================
+
+&nbsp;
+
+The $R^2$ above does not work well when we have many predictors: It will only ever increase if we add new variables, however useless these may be.
+
+Other measures like _adjusted R^2_, _AIC_ and other so called _information criteria_ take into account the number of parameters in a model.
+
+Models with more parameters get "penalized".
+
+
+
+Predictions from linear regression
+========================================================
+
+&nbsp;
+
+Like for any machine learning model, predictions from least squares should always include _prediction intervals_.
+If we are predicting averages, not individual examples, _confidence intervals_ will do, too.
+
+
+
+Non-linear relationships
+========================================================
+
+Often, the relationship between $y$ and $x$ is not linear. 
+It is still possible to use linear regression, using non-linear transformations (polynomials, log...) of the predictors - like in this example:
+
+$mpg = \beta_0 + \beta_1 * horsepower + \beta_2 * horsepower^2 + \epsilon$
+
+<figure>
+<img src="3.8.jpg">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+
+Lab: Linear regression
+========================================================
+
+
+
+========================================================
+
+
+========================================================
