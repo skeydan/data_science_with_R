@@ -56,14 +56,14 @@ class:smalltext
 1. Statistics, data mining, predictive analytics, data science, machine learning, deep learning... what???
 2. Introduction to statistical modeling: supervised vs. unsupervised, regression vs. classification, prediction vs. inference 
 3. R for data science
-4. Exploratory data analysis and visualization
-4. From visualization to models (modelr & hadley case studies)
+4. Exploratory data analysis and visualization (modelr & hadley case studies???)
 5. Important concepts in statistical modeling: overfitting, bias/variance and model selection
 6. Some statistical background
 7. Introduction to supervised learning (1): Linear regression
-8. Introduction to supervised learning (2): Classification using decision trees
-9. Algorithms for classification and/or regression: Logistic regression, support vector machines, k-nearest-neighbours
+8. Introduction to supervised learning (2): Logistic regression
+9. Algorithms: regression and classification trees, support vector machines, k-nearest-neighbors
 10. Ensemble methods
+11. Model selection revisited: Cross validation, subset selection and regularization (labs!!!)
 11. Introduction to unsupervised learning: clustering, principal components analysis
 
 ### Part 2: Case study: from data to models
