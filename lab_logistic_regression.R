@@ -1,7 +1,7 @@
 
 library(ISLR)
 library(GGally)
-
+library(dplyr)
 
 #######################################################################
 ###                     logistic regression                         ###
@@ -66,21 +66,27 @@ predict(fit, newdata = data.frame(Lag1=c(1.2,1.5),Lag2=c(1.1,-0.8)),type="respon
 ###                     logistic regression                         ###
 ###                    caravan insurance data                       ###
 #######################################################################
-
+data(Caravan)
 ?Caravan
 dim(Caravan)
 summary(Caravan$Purchase)
 
 
 # train-test split
-test <- 1:1000
+X_train <- Caravan[1001:nrow(Caravan), ]
+X_test <- Caravan[1:1000, ]
+y_train <- Caravan$Purchase[1001:nrow(Caravan)]
+y_test <- Caravan$Purchase[1:1000]
 
-fit <- glm(Purchase ~ ., data = Caravan, family = binomial, subset = -test)
-probs <- predict(fit, test, type="response")
+fit <- glm(Purchase ~ ., data = X_train, family = binomial)
+summary(fit)
+probs <- predict(fit, X_test, type="response")
 preds <- rep("No",1000)
-preds[probs > .5] <- "Yes"
-table(preds, y_test)
-preds <- rep("No", 1000)
-preds[probs > .25] <- "Yes"
-table(preds, y_test)
+preds[probs > .5] <- "Yes" # threshold at 0.5 isn't of much use
+(t <- table(preds, y_test))
+(precision <- t[2,2]/(t[2,1] + t[2,2]))
 
+preds <- rep("No", 1000)
+preds[probs > .25] <- "Yes" # move threshold to 0.25
+(t <- table(preds, y_test))
+(precision <- t[2,2]/(t[2,1] + t[2,2])) # much more useful

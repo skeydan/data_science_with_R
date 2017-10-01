@@ -622,12 +622,35 @@ $mpg = \beta_0 + \beta_1 * horsepower + \beta_2 * horsepower^2 + \epsilon$
 
 
 
-Lab: Linear regression
+Linear regression
+========================================================
+
+&nbsp;
+
+- lab
+- exercises
+
 ========================================================
 
 
-
 ========================================================
 
-
 ========================================================
+type:prompt
+
+&nbsp; 
+
+&nbsp; 
+
+<h1>
+Model selection revisited: cross-validation, subset selection and regularization
+</h1>
+
+Cross-validation
+========================================================
+
+&nbsp;
+
+- lab
+- exercises
+
