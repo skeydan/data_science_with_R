@@ -635,6 +635,30 @@ Linear regression
 
 ========================================================
 
+
+========================================================
+type:prompt
+
+&nbsp; 
+
+&nbsp; 
+
+<h1>
+Algorithms: regression and classification trees, support vector machines, k-nearest-neighbors
+</h1>
+
+
+========================================================
+type:prompt
+
+&nbsp; 
+
+&nbsp; 
+
+<h1>
+Ensemble methods
+</h1>
+
 ========================================================
 type:prompt
 
@@ -647,6 +671,29 @@ Model selection revisited: cross-validation, subset selection and regularization
 </h1>
 
 Cross-validation
+========================================================
+
+&nbsp;
+
+- lab
+
+
+Subset selection
+========================================================
+
+&nbsp;
+
+- lab
+
+
+Regularization
+========================================================
+
+
+tbd
+
+
+Regularization
 ========================================================
 
 &nbsp;

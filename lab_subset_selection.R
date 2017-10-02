@@ -56,7 +56,11 @@ plot(regfit_full,scale="bic")
 coef(regfit_full,6)
 
 
-# Forward and Backward Stepwise Selection
+#######################################################################
+###               Forward/backward stepwise selection               ###
+###                         Hitters                                 ###
+#######################################################################
+
 
 regfit_fwd <- regsubsets(Salary ~ ., data=Hitters, nvmax=19, method="forward")
 summary(regfit_fwd)
@@ -70,11 +74,15 @@ coef(regfit_fwd,7)
 coef(regfit_bwd,7)
 
 
-# Choosing Among Models of different sizes
-# using cross-validation
+#######################################################################
+###                 Choose among best models of different sizes     ###
+###                         Hitters                                 ###
+#######################################################################
+
+
 set.seed(1)
 
-# demonstration using validation set (cross-validation follows)
+# first, a demonstration using validation set (cross-validation follows)
 train <- sample(c(TRUE,FALSE), nrow(Hitters),rep=TRUE)
 validation <- (!train)
 # imagine we had a test set, too
@@ -98,34 +106,47 @@ val_errors
 which.min(val_errors)
 coef(regfit_best,10) # best on validation set
 
-######
+# now we know that the best model has 10 variables
+# we now determine the coefficients for a 10-variable model on the whole dataset (except the imaginary test set of course)
+
+regfit.best <- regsubsets(Salary~.,data=Hitters,nvmax=19)
+coef(regfit_best,10) # different variables than on validation set!
+
+
+### cross-validation
+# need to perform best subset selection within each of k training sets
 
 # to ease things, a predict function for regsubsets
 predict.regsubsets <- function(object,newdata,id,...){
   form <- as.formula(object$call[[2]])
-  mat <- model.matrix(form,newdata)
-  coefi <- coef(object,id=id)
+  mat <- model.matrix(form, newdata)
+  coefi <- coef(object, id=id)
   xvars <- names(coefi)
   mat[,xvars] %*% coefi
 }
 
-regfit.best <- regsubsets(Salary~.,data=Hitters,nvmax=19)
-coef(regfit_best,10)
+# create the 10 folds
 k <- 10
 set.seed(1)
 folds <- sample(1:k,nrow(Hitters),replace=TRUE)
-cv_errors <- matrix(NA,k,19, dimnames=list(NULL, paste(1:19)))
-for(j in 1:k){
-  best_fit <- regsubsets(Salary~.,data=Hitters[folds!=j,],nvmax=19)
-  for(i in 1:19){
-    pred <- predict(best.fit,Hitters[folds==j,],id=i)
-    cv_errors[j,i] <- mean( (Hitters$Salary[folds==j]-pred)^2)
+folds # these are the (test) fold assignments
+
+# store validation errors for each of the 19 best-models-per-size, for each of 10 folds
+cv_errors <- matrix(NA, k, 19, dimnames = list(NULL, paste(1:19))) 
+for(j in 1:k){ # for every (test) fold
+  best_fit <- regsubsets(Salary~.,data = Hitters[folds != j, ],nvmax=19) # train on all others
+  for(i in 1:19){ # for every best model
+    pred <- predict(best_fit, Hitters[folds == j, ], id=i) # predict on this fold
+    cv_errors[j,i] <- mean( (Hitters$Salary[folds == j] - pred)^2)
     }
-  }
-mean_cv_errors <- apply(cv.errors,2,mean)
+}
+# 
+mean_cv_errors <- apply(cv_errors,2,mean) # mean cross-validation error per model
 mean_cv_errors
 par(mfrow=c(1,1))
 plot(mean_cv_errors,type='b')
+
+# best subset selection on complete dataset
 reg.best <- regsubsets(Salary~.,data=Hitters, nvmax=19)
 coef(reg.best,11)
 

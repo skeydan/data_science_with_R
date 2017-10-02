@@ -1,175 +1,118 @@
-# Chapter 6 Lab 1: Subset Selection Methods
-
-# Best Subset Selection
-
 library(ISLR)
-fix(Hitters)
-names(Hitters)
-dim(Hitters)
-sum(is.na(Hitters$Salary))
-Hitters=na.omit(Hitters)
-dim(Hitters)
-sum(is.na(Hitters))
-library(leaps)
-regfit.full=regsubsets(Salary~.,Hitters)
-summary(regfit.full)
-regfit.full=regsubsets(Salary~.,data=Hitters,nvmax=19)
-reg.summary=summary(regfit.full)
-names(reg.summary)
-reg.summary$rsq
-par(mfrow=c(2,2))
-plot(reg.summary$rss,xlab="Number of Variables",ylab="RSS",type="l")
-plot(reg.summary$adjr2,xlab="Number of Variables",ylab="Adjusted RSq",type="l")
-which.max(reg.summary$adjr2)
-points(11,reg.summary$adjr2[11], col="red",cex=2,pch=20)
-plot(reg.summary$cp,xlab="Number of Variables",ylab="Cp",type='l')
-which.min(reg.summary$cp)
-points(10,reg.summary$cp[10],col="red",cex=2,pch=20)
-which.min(reg.summary$bic)
-plot(reg.summary$bic,xlab="Number of Variables",ylab="BIC",type='l')
-points(6,reg.summary$bic[6],col="red",cex=2,pch=20)
-plot(regfit.full,scale="r2")
-plot(regfit.full,scale="adjr2")
-plot(regfit.full,scale="Cp")
-plot(regfit.full,scale="bic")
-coef(regfit.full,6)
-
-# Forward and Backward Stepwise Selection
-
-regfit.fwd=regsubsets(Salary~.,data=Hitters,nvmax=19,method="forward")
-summary(regfit.fwd)
-regfit.bwd=regsubsets(Salary~.,data=Hitters,nvmax=19,method="backward")
-summary(regfit.bwd)
-coef(regfit.full,7)
-coef(regfit.fwd,7)
-coef(regfit.bwd,7)
-
-# Choosing Among Models
-
-set.seed(1)
-train=sample(c(TRUE,FALSE), nrow(Hitters),rep=TRUE)
-test=(!train)
-regfit.best=regsubsets(Salary~.,data=Hitters[train,],nvmax=19)
-test.mat=model.matrix(Salary~.,data=Hitters[test,])
-val.errors=rep(NA,19)
-for(i in 1:19){
-   coefi=coef(regfit.best,id=i)
-   pred=test.mat[,names(coefi)]%*%coefi
-   val.errors[i]=mean((Hitters$Salary[test]-pred)^2)
-}
-val.errors
-which.min(val.errors)
-coef(regfit.best,10)
-predict.regsubsets=function(object,newdata,id,...){
-  form=as.formula(object$call[[2]])
-  mat=model.matrix(form,newdata)
-  coefi=coef(object,id=id)
-  xvars=names(coefi)
-  mat[,xvars]%*%coefi
-  }
-regfit.best=regsubsets(Salary~.,data=Hitters,nvmax=19)
-coef(regfit.best,10)
-k=10
-set.seed(1)
-folds=sample(1:k,nrow(Hitters),replace=TRUE)
-cv.errors=matrix(NA,k,19, dimnames=list(NULL, paste(1:19)))
-for(j in 1:k){
-  best.fit=regsubsets(Salary~.,data=Hitters[folds!=j,],nvmax=19)
-  for(i in 1:19){
-    pred=predict(best.fit,Hitters[folds==j,],id=i)
-    cv.errors[j,i]=mean( (Hitters$Salary[folds==j]-pred)^2)
-    }
-  }
-mean.cv.errors=apply(cv.errors,2,mean)
-mean.cv.errors
-par(mfrow=c(1,1))
-plot(mean.cv.errors,type='b')
-reg.best=regsubsets(Salary~.,data=Hitters, nvmax=19)
-coef(reg.best,11)
-
-
-# Chapter 6 Lab 2: Ridge Regression and the Lasso
-
-x=model.matrix(Salary~.,Hitters)[,-1]
-y=Hitters$Salary
-
-# Ridge Regression
-
 library(glmnet)
-grid=10^seq(10,-2,length=100)
-ridge.mod=glmnet(x,y,alpha=0,lambda=grid)
-dim(coef(ridge.mod))
-ridge.mod$lambda[50]
-coef(ridge.mod)[,50]
-sqrt(sum(coef(ridge.mod)[-1,50]^2))
-ridge.mod$lambda[60]
-coef(ridge.mod)[,60]
-sqrt(sum(coef(ridge.mod)[-1,60]^2))
-predict(ridge.mod,s=50,type="coefficients")[1:20,]
+
+#######################################################################
+###                     Ridge Regression                            ###
+###                         Hitters                                 ###
+#######################################################################
+
+data("Hitters")
+str(Hitters)
+Hitters <- na.omit(Hitters)
+
+X <- model.matrix(Salary ~ ., Hitters)[ ,-1]
+X
+dim(X)
+y <- Hitters$Salary
+
+# search grid for the regularization parameter
+grid <- 10^seq(10,-2,length=100)
+grid
+
+?glmnet
+# alpha = the elasticnet mixing parameter, with 0 ≤ α ≤ 1.
+# The penalty is defined as (1 - α)/2 * ||β||_2^2 + α * ||β||_1
+# alpha=1 is the lasso penalty, and alpha=0 the ridge penalty.
+ridge_mod <- glmnet(X, y, alpha=0, lambda=grid)
+# ridge_mod
+dim(coef(ridge_mod)) # 100 vectors of ridge coefficients, one for each lambda
+
+# compare size of the coefficients at different lambdas
+# the median lambda
+ridge_mod$lambda[50]
+coef(ridge_mod)[,50]
+sqrt(sum(coef(ridge_mod)[-1,50]^2)) # the l2 norm
+
+# a smaller lambda
+ridge_mod$lambda[60]
+coef(ridge_mod)[,60]
+sqrt(sum(coef(ridge_mod)[-1,60]^2)) # much smaller l2 norm!
+
+
+# split into test and training set to estimate test error of ridge regression
 set.seed(1)
-train=sample(1:nrow(x), nrow(x)/2)
-test=(-train)
-y.test=y[test]
-ridge.mod=glmnet(x[train,],y[train],alpha=0,lambda=grid, thresh=1e-12)
-ridge.pred=predict(ridge.mod,s=4,newx=x[test,])
-mean((ridge.pred-y.test)^2)
-mean((mean(y[train])-y.test)^2)
-ridge.pred=predict(ridge.mod,s=1e10,newx=x[test,])
-mean((ridge.pred-y.test)^2)
-ridge.pred=predict(ridge.mod,s=0,newx=x[test,],exact=T)
-mean((ridge.pred-y.test)^2)
-lm(y~x, subset=train)
-predict(ridge.mod,s=0,exact=T,type="coefficients")[1:20,]
-set.seed(1)
-cv.out=cv.glmnet(x[train,],y[train],alpha=0)
-plot(cv.out)
-bestlam=cv.out$lambda.min
-bestlam
-ridge.pred=predict(ridge.mod,s=bestlam,newx=x[test,])
-mean((ridge.pred-y.test)^2)
-out=glmnet(x,y,alpha=0)
-predict(out,type="coefficients",s=bestlam)[1:20,]
+train <- sample(1:nrow(X), nrow(X)/2)
+test <- (-train)
+y_test <- y[test]
 
-# The Lasso
+# fit on training set
+ridge_mod <- glmnet(X[train, ], y[train], alpha = 0,lambda = grid, thresh = 1e-12)
 
-lasso.mod=glmnet(x[train,],y[train],alpha=1,lambda=grid)
-plot(lasso.mod)
-set.seed(1)
-cv.out=cv.glmnet(x[train,],y[train],alpha=1)
-plot(cv.out)
-bestlam=cv.out$lambda.min
-lasso.pred=predict(lasso.mod,s=bestlam,newx=x[test,])
-mean((lasso.pred-y.test)^2)
-out=glmnet(x,y,alpha=1,lambda=grid)
-lasso.coef=predict(out,type="coefficients",s=bestlam)[1:20,]
-lasso.coef
-lasso.coef[lasso.coef!=0]
+# get MSE on test set for lambda = 4
+ridge_pred <- predict(ridge_mod, s = 4, newx = X[test, ])
+mean((ridge_pred - y_test)^2)
+# get MSE on test set for lambda = 10^10 - this is the same as just fitting an intercept
+ridge_pred <- predict(ridge_mod, s = 1e10, newx=X[test,])
+mean((ridge_pred-y.test)^2)
+# the least squares fit
+ridge_pred <- predict(ridge_mod, s = 0, newx=X[test,], exact=T, x = X[train, ], y = y[train] )
+mean((ridge_pred - y_test)^2)
+# same coefficients as from lm
+lm(y ~ X, subset=train) 
+predict(ridge_mod, s = 0, exact = T, type="coefficients", x = X[train, ], y = y[train])[1:20,] # use predict to get coefficients for a new lambda
 
 
-# Chapter 6 Lab 3: PCR and PLS Regression
-
-# Principal Components Regression
-
-library(pls)
-set.seed(2)
-pcr.fit=pcr(Salary~., data=Hitters,scale=TRUE,validation="CV")
-summary(pcr.fit)
-validationplot(pcr.fit,val.type="MSEP")
-set.seed(1)
-pcr.fit=pcr(Salary~., data=Hitters,subset=train,scale=TRUE, validation="CV")
-validationplot(pcr.fit,val.type="MSEP")
-pcr.pred=predict(pcr.fit,x[test,],ncomp=7)
-mean((pcr.pred-y.test)^2)
-pcr.fit=pcr(y~x,scale=TRUE,ncomp=7)
-summary(pcr.fit)
-
-# Partial Least Squares
+# nobody wants to manually compare MSEs
+# use cross-validation for this!
 
 set.seed(1)
-pls.fit=plsr(Salary~., data=Hitters,subset=train,scale=TRUE, validation="CV")
-summary(pls.fit)
-validationplot(pls.fit,val.type="MSEP")
-pls.pred=predict(pls.fit,x[test,],ncomp=2)
-mean((pls.pred-y.test)^2)
-pls.fit=plsr(Salary~., data=Hitters,scale=TRUE,ncomp=2)
-summary(pls.fit)
+cv_out <- cv.glmnet(X[train,], y[train], alpha=0)
+plot(cv_out)
+
+bestlambda <- cv_out$lambda.min
+bestlambda
+
+# get predictions for best lambda
+ridge_pred <- predict(ridge_mod, s = bestlambda, newx = X[test,])
+# and MSE
+mean((ridge_pred - y_test)^2)
+
+# now re-fit on whole dataset
+out <- glmnet(X, y, alpha=0)
+# final coefficients at best lambda
+predict(out, type = "coefficients", s = bestlambda)[1:20,]
+
+# none of the coefficients is 0
+# ridge is not for variable selection!
+plot(ridge_mod)
+
+
+#######################################################################
+###                          Lasso                                  ###
+###                         Hitters                                 ###
+#######################################################################
+
+# set alpha=1 for lasso
+lasso_mod <- glmnet(X[train,], y[train], alpha = 1, lambda = grid)
+# inspect coefficient path
+plot(lasso_mod)
+plot(lasso_mod, xvar = "lambda")
+
+# find best lambda by cross-validation
+set.seed(1)
+cv_out <- cv.glmnet(X[train,],y[train], alpha = 1)
+plot(cv_out)
+bestlambda <- cv_out$lambda.min
+lasso_pred <- predict(lasso_mod, s = bestlambda, newx=X[test,])
+mean((lasso_pred - y_test)^2) # much better than least squares
+
+# final model on whole set
+out <- glmnet(X, y, alpha = 1, lambda = grid)
+# get best coefficients
+lasso_coef <- predict(out, type ="coefficients",s = bestlambda)[1:20,]
+lasso_coef
+lasso_coef[lasso_coef!=0]
+
+# now we have just 7 non-zero coefficients!
+
+
