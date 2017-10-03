@@ -913,7 +913,7 @@ For all red points, $1 + 2X_1 + 3X_2 < 0$, while for all blue points, $1 + 2X_1 
 
 
 <figure>
-<img src="9.1.jpg" width="30%">
+<img src="9.1.jpg" width="20%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -965,9 +965,119 @@ The support vector classifier
 
 &nbsp;
 
+The support vector classifier allows for some points to be misclassified, subject to a "misclassification budget" set by a tuning parameter.
+
+Observations may be on the wrong side of the margin, and even on the wrong side of the hyperplane:
+
+<figure>
+<img src="9.6.jpg" width="30%">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+Support vectors and the bias-variance trade-off
+========================================================
+
+&nbsp;
+
+Depending on the tuning parameter for the "misclassification budget", the resulting classifier takes a different position in the bias-variance trade-off:
+
+- big "misclassification budget": many support vectors, low variance, potentially high bias
+- small "misclassification budget": few support vectors, high variance, low bias
+
+<figure>
+<img src="9.7.jpg" width="20%">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+From support vector classifier to support vector machine
+========================================================
+
+&nbsp;
+
+No linear classifier can possibly account for this scenario...
+
+<figure>
+<img src="9.8.jpg" width="20%">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+The support vector machine
+========================================================
+
+&nbsp;
+
+Support vector machines model non-linear decision boundaries using _kernels_ (such as polynomial, radial...)
+
+This is how SVMs with polynomial resp. radial kernel handle the above problem:
+
+<figure>
+<img src="9.9.jpg" width="20%">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+Support vector machine
+========================================================
+
+&nbsp;
+
+- lab
+
+Support vector machines
+========================================================
+
+&nbsp;
+
 - Support vector machines have been _the hype_ out there until the event deep learning.
 - They combine the _maximal margin_ principle with _kernels_ that allow for handling all kinds of non-linear data.
 
+
+K-nearest neighbors (KNN)
+========================================================
+
+&nbsp;
+
+K-nearest neighbors is a non-parametric algorithm that can be used for classification as well as regression.
+
+A test point is classified (or assigned a prediction value) according to the k _nearest_ (by Euclidean distance, mostly) exemplars in the training set.
+
+Note: there are no separate training and test phases!
+
+<figure>
+<img src="knn.png" width="10%">
+<figcaption>Source: Wikipedia.
+</figcaption>
+</figure>
+
+
+KNN: decision boundaries
+========================================================
+
+&nbsp;
+
+The KNN decision boundary (and thus, the position taken in the bias-variance trade-off) depends on the parameter k.
+
+Left: k=1, right: k=100
+
+<figure>
+<img src="2.16.jpg" width="20%">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+K-nearest neighbors (KNN)
+========================================================
+
+&nbsp;
+
+- lab
 
 
 ========================================================
@@ -1039,6 +1149,14 @@ Even though with ensemble methods like random forests we lose the ease of visual
 </figure>
 
 
+Ensemble methods
+========================================================
+
+&nbsp;
+
+- lab
+
+
 ========================================================
 type:prompt
 
@@ -1071,9 +1189,7 @@ Subset selection
 Regularization
 ========================================================
 
-
-tbd
-
+- TBD
 
 Regularization
 ========================================================
@@ -1081,5 +1197,4 @@ Regularization
 &nbsp;
 
 - lab
-- exercises
 
