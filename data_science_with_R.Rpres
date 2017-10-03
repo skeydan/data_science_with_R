@@ -44,6 +44,8 @@ Data Science with R
 author: Sigrid Keydana, Trivadis
 date: 
 autosize: true
+width: 1600
+
 
 Agenda
 ========================================================
@@ -488,7 +490,7 @@ type:prompt
 &nbsp; 
 
 <h1>
-Supervised learning: linear regression
+Supervised learning (regression): linear regression
 </h1>
 
 
@@ -630,10 +632,137 @@ Linear regression
 - lab
 - exercises
 
-========================================================
-
 
 ========================================================
+type:prompt
+
+&nbsp; 
+
+&nbsp; 
+
+<h1>
+Supervised learning (classification): logistic regression
+</h1>
+
+
+Who will default on their credit card?
+========================================================
+
+&nbsp;
+
+Why we cannot just use linear regression
+
+- on binary data, in principle we could, coding the response as 0/1
+- but we would obtain some strange predictions...
+
+<figure>
+<img src="4.2.jpg">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+Logistic regression - rationale
+========================================================
+
+&nbsp;
+
+- Instead of the response itself (that is directly modeled by linear regression), logistic regression models the probability of the outcome
+
+$P(default = Yes |  balance)$
+
+- probabilities are between 0 and 1 - one function that does this is the _logistic_:
+
+$p(X) = \frac{e^{\beta_0 + \beta_1X}}{1 + e^{\beta_0 + \beta_1X}}$
+
+- in logistic regression, what corresponds to the regression coefficient(s) is the _log-odds_ or _logit_:
+
+$log(\frac{p(X)}{1-p(X)}) = \beta_0 + \beta_1 X$
+
+- this means that with a one-unit increase in X is associated an increase in the _log-odds_ of $\beta_1$
+
+
+Not all errors are born equal in classification
+========================================================
+
+&nbsp;
+
+- the simplest measure of success in classification is _accuracy_, the proportion of correct classifications 
+
+$accuracy = \frac{number\>correctly\>classified}{number\>misclassified}$
+
+- however, errors are either false positives or false negatives, and often it may make a big difference which it is!
+- therefore, we want to look at the _confusion matrix_ that shows all 4 possibilities
+- what would you think of the following confusion matrix for credit card default data?
+
+
+<figure>
+<img src="table_4_4.png">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+Terminology
+========================================================
+class:smalltext
+
+&nbsp;
+
+action/truth                | $\mathbf{H_0}$ is true   | $\mathbf{H_1}$ is true   | total
+-------------               | -------------            | -------------            | ---
+__$\mathbf{H_1}$ accepted__ | $V$                      | $S$                      | $R$
+__$\mathbf{H_1}$ rejected__ | $U$                      | $T$                      | $n - R$
+__total__                   | $n_0$                    | $n - n_0$                | $n$
+
+
+* False Positive / __Type 1 error__: $V$
+* False Negative / __Type 2 error__: $T$
+* __Sensitivity__ / __Recall__ / True Positive Rate: proportion of correctly detected positives, $\frac{S}{n - n_0}$
+* __Specificity__ / True Negative Rate: proportion of negatives correctly identified as such, $\frac{U}{n_0}$
+* __Precision__: proportion of accepted instances that are correct, $\frac{S}{R}$ (= Positive Predictive Value)
+* __Accuracy__: proportion classified correctly, $\frac{S + U}{n}$
+
+(after: http://en.wikipedia.org/wiki/Familywise_error_rate)
+
+
+ROC Curves
+========================================================
+
+&nbsp;
+
+The _area under the ROC curve_ (_AUC_) measures the overall performance of a classifier.
+
+<figure>
+<img src="4.8.jpg">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+Decision boundaries
+========================================================
+
+&nbsp;
+
+In two dimensions, it is possible to display a classifier's decision boundary.
+
+Here are decision boundaries for two classifiers, a linear and a non-linear one (the dashed line representing the theoretical optimum):
+
+<figure>
+<img src="4.9.jpg">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+Logistic regression
+========================================================
+
+&nbsp;
+
+- lab
+- exercises
 
 
 ========================================================
@@ -644,8 +773,201 @@ type:prompt
 &nbsp; 
 
 <h1>
-Algorithms: regression and classification trees, support vector machines, k-nearest-neighbors
+Algorithms
 </h1>
+<h3>
+Regression and classification trees, support vector machines, k-nearest-neighbors
+</h3>
+
+Decision trees
+========================================================
+
+&nbsp;
+
+- Decision trees partition the dataset into regions based on the predictors.
+- They can be used for classification and regression.
+
+A simple regression tree for prediction of (log) salary of baseball players:
+
+<figure>
+<img src="8.1.jpg" width="30%">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+Regression trees - rationale
+========================================================
+
+&nbsp;
+
+- Regression trees divide the predictor space into regions/boxes and then predict the same value for every region/box.
+- The goal is to find boxes that minimize the RSS, that is, the sum of the squared deviations of every single $y$ in a box from its "box mean" (summed over all box members and all boxes)
+
+Here is the partitioning into regions for the baseball players example:
+
+<figure>
+<img src="8.2.jpg" width="30%">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+
+Danger zone!
+========================================================
+
+&nbsp;
+
+If we follow that strategy blindly, we end up _overfitting_ the dataset, as with this tree:
+
+<figure>
+<img src="8.4.jpg" width="30%">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+Cost complexity pruning
+========================================================
+class:smalltext
+
+&nbsp;
+
+With cost complexity pruning, we obtain the optimal tree size trading off complexity (defined as number of terminal nodes) against the RSS.
+
+$$\sum_{m=1}^{|T|} \sum_{i: x_i \epsilon R_m} (y_i - \hat y_{R_m})^2 + \alpha|T|$$
+
+<figure>
+<img src="tree_algo.png" width="30%">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+Classification trees
+========================================================
+
+&nbsp;
+
+- Classification trees are constructed analogously to regression trees
+- apart from their using a different error measure: mostly one of
+    - Gini index (= total variance across classes, inhomogeneity/_impurity_ of nodes)
+    - cross entropy (practically equivalent in this context)
+
+
+
+Classification tree example: Detecting heart disease
+========================================================
+
+&nbsp;
+
+<figure>
+<img src="8.6.jpg" width="30%">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+Trees versus linear models
+========================================================
+
+&nbsp;
+
+- Trees are easily interpretable and optimally suited for communication
+- linear models are often more robust to changes in the sample dataset, and more accurate in their predictions
+
+In a concrete case, the shape of the true decision boundary plays an important role:
+
+<figure>
+<img src="8.7.jpg" width="30%">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+
+Decision trees
+========================================================
+
+&nbsp;
+
+- lab
+
+
+Support vector machines
+========================================================
+
+&nbsp;
+
+- Support vector machines have been _the hype_ out there until the event deep learning.
+- They combine the _maximal margin_ principle with _kernels_ that allow for handling all kinds of non-linear data.
+
+
+Separating hyperplanes
+========================================================
+
+&nbsp;
+
+In this example, the hyperplane $1 + 2X_1 + 3X_2 = 0$ separates the blue and the red regions.
+
+For all red points, $1 + 2X_1 + 3X_2 < 0$, while for all blue points, $1 + 2X_1 + 3X_2 > 0$.
+
+
+<figure>
+<img src="9.1.jpg" width="30%">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+But there are many potential separating hyperplanes...
+========================================================
+
+&nbsp;
+
+<figure>
+<img src="9.2.jpg" width="30%">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+Linearly separable datasets: the maximal margin classifier
+========================================================
+
+&nbsp;
+
+The maximal margin hyperplane depends only on the _support vectors_ (shown with arrows), not on any other observations from the dataset!
+
+<figure>
+<img src="9.3.jpg" width="30%">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+Moving away from the linear separability condition
+========================================================
+
+&nbsp;
+
+Most datasets are not linearly separable.
+
+In fact, even if they are, a separating hyperplane may not always be the right choice!
+
+<figure>
+<img src="9.5.jpg" width="30%">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+
+The support vector classifier
+========================================================
+
+&nbsp;
+
+- Support vector machines have been _the hype_ out there until the event deep learning.
+- They combine the _maximal margin_ principle with _kernels_ that allow for handling all kinds of non-linear data.
+
 
 
 ========================================================
@@ -659,6 +981,64 @@ type:prompt
 Ensemble methods
 </h1>
 
+
+Many trees make up a forest
+========================================================
+
+&nbsp;
+
+Among the most successful methods in practice are ensemble methods that _average over many runs of an algorithm_.
+
+Where a single decision tree lacks robustness (has high variance), many trees - as in _bagging_, _boosting_ and _random forests_ - are both stable and accurate.
+
+Bagging
+========================================================
+
+&nbsp;
+
+- generate B bootstrapped training sets
+- train a tree on every one of them and collect the predictions
+- average the predictions
+
+
+Random forests
+========================================================
+
+&nbsp;
+
+- generate B bootstrapped training sets
+- train a tree on every one of them
+- at each step, consider just a _random subset_ of predictors for the split
+- collect and average the predictions, as with bagging
+
+As opposed to bagging, random forests build averages over more dissimilar trees, leading to a higher reduction in variance.
+
+
+Boosting
+========================================================
+
+&nbsp;
+
+- does not involve bootstrap sampling
+- instead, builds a sequence of decision trees, where each new tree improves over the weaknesses of the previous ones
+- i.e., a succession of "slow learners"
+- each single tree often has very small depth (up to "decision stumps")
+
+How about interpretability?
+========================================================
+
+&nbsp;
+
+
+Even though with ensemble methods like random forests we lose the ease of visual inspection, we can still obtain a graph of _variable importance_, as in this example:
+
+<figure>
+<img src="8.9.jpg" width="30%">
+<figcaption>Source: G. James, D. Witten, T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
 ========================================================
 type:prompt
 
@@ -667,8 +1047,10 @@ type:prompt
 &nbsp; 
 
 <h1>
-Model selection revisited: cross-validation, subset selection and regularization
+Model selection revisited
 </h1>
+
+<h3>Cross-validation, subset selection and regularization</h3>
 
 Cross-validation
 ========================================================

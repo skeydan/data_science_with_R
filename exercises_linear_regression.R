@@ -2,7 +2,6 @@ library(dplyr)
 library(ggplot2)
 library(readr)
 library(GGally)
-library(dplyr)
 
 
 #######################################################################
@@ -60,11 +59,44 @@ fit %>% predict(newdata = data.frame(TV = median(advertising$TV),
                 interval = "prediction")
 
 
+
+
 #######################################################################
 ###                      income data                                ###
 #######################################################################
 
-advertising <- read_csv("Advertising.csv", col_types = "_dddd")
-advertising
-summary(advertising)
+income <- read_csv("Income2.csv", col_types = "_ddd")
+income
 
+# Questions
+# 1
+# Inspect the data and formulate a hypothesis about what leads to a higher income.
+
+cor(income)
+ggpairs(income)
+
+# 2
+# Test your hypothesis (using regression)
+
+linear_fit <- lm(Income ~ ., data = income)
+summary(linear_fit)
+
+cubic_fit <- lm(Income ~ Education + I(Education^2) + I(Education^3) + Seniority, data = income)
+summary(cubic_fit)
+
+# same adj. R^2, very different coefficients
+poly_fit <- lm(Income ~ poly(Education,3) + Seniority, data = income)
+summary(poly_fit)
+
+# trying some higher-degree polynomials
+# of course we would need a bigger dataset to split in train and test here...
+poly_fit <- lm(Income ~ poly(Education,4) + Seniority, data = income)
+summary(poly_fit)
+
+poly_fit <- lm(Income ~ poly(Education,5) + Seniority, data = income)
+summary(poly_fit)
+
+# this would be nice but doesn't work so well
+sigmoid <- function(x) 1/(1 + exp(-x))
+sigmoid_fit <- lm(Income ~ Education + sigmoid(Education) + Seniority, data = income)
+summary(sigmoid_fit)
