@@ -33,7 +33,7 @@
 }
 
 .reveal .smalltext {
-  font-size: 0.8em;
+  font-size: 0.7em;
 }
 
 </style>
@@ -51,26 +51,175 @@ Agenda
 ========================================================
 class:smalltext
 
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.width=16, fig.height=8, fig.path='Figs/',
+                      warning=FALSE, message=FALSE,
+                      cache = TRUE)
+```
+
 &nbsp;
 
 ### Part 1: Concepts, basics, methods
 
-1. Statistics, data mining, predictive analytics, data science, machine learning, deep learning... what???
-2. Introduction to statistical modeling: supervised vs. unsupervised, regression vs. classification, prediction vs. inference 
-3. R for data science
-4. Exploratory data analysis and visualization (modelr & hadley case studies???)
-5. Important concepts in statistical modeling: overfitting, bias/variance and model selection
-6. Some statistical background
-7. Introduction to supervised learning (1): Linear regression
-8. Introduction to supervised learning (2): Logistic regression
-9. Algorithms: regression and classification trees, support vector machines, k-nearest-neighbors
-10. Ensemble methods
-11. Model selection revisited: Cross validation, subset selection and regularization (labs!!!)
-11. Introduction to unsupervised learning: clustering, principal components analysis
+- Lost in terminology?
+- Introduction to statistical modeling
+    - supervised vs. unsupervised learning
+    - regression vs. classification
+    - prediction vs. inference 
+- R for data science, a short introduction
+- Exploratory data analysis 
+- Important concepts in statistical modeling
+    - overfitting
+    - bias/variance trade-off
+    - model selection
+- Some statistical background
+- Introduction to supervised learning (regression): Linear regression
+- Introduction to supervised learning (classification): Logistic regression
 
-### Part 2: Case study: from data to models
 
-fraud  detection
+
+Agenda (cont.)
+========================================================
+class:smalltext
+
+&nbsp;
+
+### Part 1 (cont.)
+
+- More algorithms:
+    - regression and classification trees
+    - support vector machines
+    - k-nearest-neighbors
+- Ensemble methods
+- Model selection revisited
+    - cross-validation
+    - subset selection
+    - regularization 
+- Introduction to unsupervised learning:
+    - clustering
+    - principal components analysis (PCA)
+    
+### Part 2: Case study
+
+From data to models: fraud  detection
+
+
+
+========================================================
+type:prompt
+
+&nbsp; 
+
+&nbsp; 
+
+<h1>
+Lost in terminology?
+</h1>
+
+
+The classic: Drew Conway's original Data Science Venn diagram
+========================================================
+
+&nbsp;
+
+
+<figure>
+<img src="Data_Science_VD.png">
+<figcaption>Source:http://drewconway.com/zia/2013/3/26/the-data-science-venn-diagram
+</figcaption>
+</figure>
+
+
+
+One of it's many successors...
+========================================================
+
+&nbsp;
+
+
+
+<figure>
+<img src="data-scientist-venn-diagram.png">
+<figcaption>Source: http://www.kdnuggets.com/2016/09/new-data-science-venn-diagram.html
+</figcaption>
+</figure>
+
+
+... and one more focused on the "doings" 
+========================================================
+
+&nbsp;
+
+
+<figure>
+<img src="data-science-puzzle-2017.jpg">
+<figcaption>Source: http://www.kdnuggets.com/2017/01/data-science-puzzle-revisited.html
+</figcaption>
+</figure>
+
+
+Statistics vs. Machine Learning
+========================================================
+
+&nbsp;
+
+- different methods?
+- or _just_: different goals?
+- or _just_: different world views?
+- or really: _same old thing_?
+
+
+
+Model to black box, and back again? (1)
+========================================================
+
+&nbsp;
+
+__Leo Breiman, Statistical Modeling: The Two Cultures (2001)__
+
+&nbsp;
+
+
+$y = f(x, params, noise)$ &nbsp;&nbsp;&nbsp; vs. &nbsp;&nbsp;&nbsp; $x -> \fbox{black box} -> y$
+
+
+&nbsp;
+
+- _data modeling_ vs. _algorithmic modeling_
+
+- _goodness of fit_ and _examination of residuals_ vs. _predictive accuracy_ 
+
+
+
+Model to black box, and back again? (2)
+========================================================
+
+&nbsp;
+
+__Leo Breiman, Statistical Modeling: The Two Cultures (2001)__
+
+&nbsp;
+
+"The goal is not interpretability, but accurate information."
+
+
+
+Model to black box, and back again? (3)
+========================================================
+
+&nbsp;
+
+__16 years later__
+
+Machine learning / deep learning is taking over decision making in super important areas (or will, soon)
+
+- medical diagnosis
+- autonomous driving
+- loan applications
+- jurisdiction
+- ...
+
+We definitely need interpretability / explanations!
 
 
 ========================================================
@@ -83,6 +232,9 @@ type:prompt
 <h1>
 Introduction to statistical modeling
 </h1>
+
+<h3>supervised vs unsupervised learning, regression vs. classification, prediction vs. inference 
+</h3>
 
 
 Example: Advertising
@@ -215,19 +367,6 @@ By method
 
 
 ========================================================
-
-========================================================
-
-========================================================
-
-========================================================
-
-========================================================
-
-
-
-
-========================================================
 type:prompt
 
 &nbsp; 
@@ -294,6 +433,8 @@ class:smallcode
 
 #### Basic data types and assignment
 
+&nbsp;
+
 ```{r, results="hide" }
 2      # a number
 class(2)
@@ -312,26 +453,487 @@ y = 2 # can also use =
 ```
 
 
+
 Getting started with R (2)
 ========================================================
 class:smallcode
 
 &nbsp;
 
-#### Data structure
+#### 1-dimensional data structures: vectors and lists
+
+&nbsp;
+
 
 ```{r, results="hide" }
-z <- c(1,2,3) # a vector of doubles
-zz <- c("a", "b", "c") # a vector of character strings
+# Vectors: all elements of a vector must be of the same type
+c(1,2,3) # a vector of doubles
+c("a", "b", "c") # a vector of character strings
+1:10 # a shortcut 
+seq(1, 10, by=0.5)
 
 # actually, all objects are non-scalars, there is no real difference
 length(c(1,2,3))
+length(1)
 
+# a factor (for categorical data)
+f <- factor(c("a", "b", "b")) 
+f
+levels(f)
 
-zzz <- factor(zz) # a factor (for categorical data)
+# Lists may have elements of different types
+list(1, 2, 3, FALSE, 'x', 'y','z')
+# list elements may be , and often are, named:
+list(numbers = 1:3, logical = FALSE, letters = letters[24:26])
 
 ```
 
+
+Getting started with R (3)
+========================================================
+class:smallcode
+
+&nbsp;
+
+#### 2-dimensional data structures: matrices and data frames
+
+&nbsp;
+
+
+```{r, results="hide" }
+# Matrices are like vectors in that the elements have to be of the same type
+matrix(1:20, nrow = 2, ncol =10)
+matrix(1:20, nrow = 2, ncol =10, byrow = TRUE)
+
+# data frames are like lists in their columns may be of different types
+data.frame(firstcol = 1:3, secondcol = rep(777,3), thirdcol = c('desc', 'anotherdesc', 'yetanotherdesc'))
+
+# R comes with many datasets included
+data("mtcars")
+mtcars
+dim(mtcars)
+
+# if we need matrices of more than 2 dimensions, we use arrays:
+array(1:64, dim = c(2,8,4))
+```
+
+
+Getting started with R (4)
+========================================================
+class:smallcode
+
+&nbsp;
+
+#### Subsetting: vectors and lists
+
+&nbsp;
+
+```{r, results="hide" }
+# subsetting a vector
+v <- 1:10
+v[2]
+v[3:4]
+
+# subsetting a list
+mylist <- list(LETTERS[1:4], rep(1,10), 7777) 
+mylist
+mylist[3]; class(mylist[3]) # this is a sublist
+mylist[[3]]; class(mylist[[3]]) # this is the element by itself
+
+# a named list
+mylist <- list(chars = LETTERS[1:4], numbers = rep(1,10), one_number = 7777)
+mylist
+mylist$chars # way 1 
+mylist[["chars"]] # way 2
+```
+
+
+Getting started with R (4)
+========================================================
+class:smallcode
+
+&nbsp;
+
+#### Subsetting: matrices and data frames
+
+&nbsp;
+
+```{r, results="hide" }
+# subsetting a matrix
+m <- matrix(1:12, 2, 6)
+m[1,2]
+m[1, ]
+m[ ,1]
+m[1, 3:5]
+
+# subsetting a data frame
+mtcars
+mtcars$mpg
+mtcars[["mpg"]]
+mtcars$cyl[2]
+```
+
+
+Getting started with R (5)
+========================================================
+class:smallcode
+
+&nbsp;
+
+#### The tidyverse: data manipulation with dplyr
+
+&nbsp;
+
+```{r, results="hide" }
+library(dplyr)
+library(ggplot2)
+data(diamonds)
+
+# SQL WHERE
+filter(diamonds, cut == "Premium")
+
+# using the pipe from now on
+diamonds %>% filter(cut == "Premium")
+diamonds %>% filter(cut == "Premium" & depth > 62.4)
+
+# SQL SELECT
+diamonds %>% filter(cut == "Premium" & depth > 62.4) %>% select(price)
+
+# SQL group by
+diamonds %>% filter(cut == "Premium" & depth > 62.4) %>% group_by(color) %>% summarise(avg_price = mean(price))
+
+```
+
+
+Getting started with R (5)
+========================================================
+class:smallcode
+
+&nbsp;
+
+#### The tidyverse: plotting with ggplot2
+
+&nbsp;
+
+```{r, results="hide", fig.keep="none"}
+library(ggplot2)
+data(diamonds)
+
+# a basic scatterplot
+ggplot(data = diamonds, mapping = aes(x = carat, y = price)) + geom_point()
+
+# adding smoothing
+ggplot(data = diamonds, mapping = aes(x = carat, y = price)) + geom_point() + geom_smooth()
+ 
+# boxplots
+ggplot(diamonds, aes(x = 1, y = carat)) + geom_boxplot()
+ggplot(diamonds, aes(x = cut, y = carat)) + geom_boxplot()
+
+ggplot(diamonds, aes(x = cut, y = carat)) + geom_violin()
+```
+
+
+========================================================
+type:prompt
+
+&nbsp; 
+
+&nbsp; 
+
+<h1>
+Exploratory data analysis
+</h1>
+
+
+The most important thing about exploratory data analysis
+========================================================
+
+&nbsp;
+
+Do it.
+
+
+66% of variance in income can be explained by tenure!
+========================================================
+class:smallcode
+
+&nbsp;
+
+... as shown by $R^2$ in 4 datasets:
+
+```{r}
+# spoiler... this is not about income, but it's the famous Anscombe dataset
+data("anscombe")
+summary(lm(y1 ~ x1, data = anscombe))$r.squared
+summary(lm(y2 ~ x2, data = anscombe))$r.squared
+summary(lm(y3 ~ x3, data = anscombe))$r.squared
+summary(lm(y4 ~ x4, data = anscombe))$r.squared
+```
+
+
+
+How does the data really look?
+========================================================
+incremental:true
+
+&nbsp;
+
+```{r, echo=FALSE}
+data("anscombe")
+ff <- y ~ x
+mods <- setNames(as.list(1:4), paste0("lm", 1:4))
+for(i in 1:4) {
+  ff[2:3] <- lapply(paste0(c("y","x"), i), as.name)
+  mods[[i]] <- lmi <- lm(ff, data = anscombe)
+}
+
+op <- par(mfrow = c(2, 2), mar = 0.1+c(4,4,1,1), oma =  c(0, 0, 2, 0))
+for(i in 1:4) {
+  ff[2:3] <- lapply(paste0(c("y","x"), i), as.name)
+  plot(ff, data = anscombe, col = "red", pch = 21, bg = "orange", cex = 1.2,
+       xlim = c(3, 19), ylim = c(3, 13))
+  abline(mods[[i]], col = "blue")
+}
+mtext("Anscombe's 4 Regression data sets", outer = TRUE, cex = 1.5)
+par(op)
+```
+
+
+
+Getting to know the dataset (1)
+========================================================
+class:smallcode
+
+&nbsp;
+
+What kind of data do we have?
+
+```{r}
+library(DMwR2)
+data("algae")
+nrow(algae)
+str(algae)
+```
+
+
+
+Getting to know the dataset (2)
+========================================================
+
+&nbsp;
+
+Summary statistics:
+
+```{r}
+summary(algae)
+```
+
+
+Getting to know the dataset (3)
+========================================================
+
+&nbsp;
+
+Find missing values:
+
+```{r}
+algae %>% summarise_all(funs(sum(is.na(.))))
+```
+
+
+
+Getting to know the dataset (4)
+========================================================
+
+&nbsp;
+
+Correlation matrix:
+
+```{r}
+algae %>% select_if(is.numeric) %>% filter_all(all_vars(!is.na(.))) %>% cor()
+```
+
+
+Getting to know the dataset (5)
+========================================================
+
+&nbsp;
+
+Pairs plot:
+
+```{r}
+library(GGally)
+algae %>% select_if(is.numeric) %>% select(-(num_range("a", 2:7))) %>% ggpairs()
+```
+
+
+
+Goals of exploration
+========================================================
+
+&nbsp; 
+
+Further exploration will depend on your questions / hypothesis.
+
+In any case, you will probably want to summarize the variables you're interested in.
+
+
+What is a good summary?
+========================================================
+
+&nbsp;
+
+Mean vs. median (1)
+
+```{r, echo=FALSE}
+bold_text_20 <- element_text(face = "bold", size = 20)
+ggplot(algae, aes(x = mxPH)) + geom_density(na.rm = TRUE) +
+  geom_vline(aes(
+  xintercept = mean(algae$mxPH, na.rm = TRUE),
+  linetype = "mean"
+  ), color = 'red') +
+  geom_vline(aes(
+  xintercept = median(algae$mxPH, na.rm = TRUE),
+  linetype = "median"
+  ), color = 'green') +
+  scale_linetype_manual(
+  name = "statistic",
+  values = c(2, 2),
+  guide = guide_legend(override.aes = list(color = c("green", "red")))
+  ) +
+  xlab("") + ylab("density") +
+ggtitle("algae$mxPH") + theme(title = bold_text_20, axis.title = bold_text_20, axis.text = bold_text_20)
+```
+
+
+What is a good summary?
+========================================================
+
+&nbsp;
+
+Mean vs. median (2)
+
+```{r, echo=FALSE}
+bold_text_20 <- element_text(face = "bold", size = 20)
+ggplot(algae, aes(x = a1)) + geom_density(na.rm = TRUE) +
+  geom_vline(aes(
+  xintercept = mean(algae$mxPH, na.rm = TRUE),
+  linetype = "mean"
+  ), color = 'red') +
+  geom_vline(aes(
+  xintercept = median(algae$mxPH, na.rm = TRUE),
+  linetype = "median"
+  ), color = 'green') +
+  scale_linetype_manual(
+  name = "statistic",
+  values = c(2, 2),
+  guide = guide_legend(override.aes = list(color = c("green", "red")))
+  ) +
+  xlab("") + ylab("density") +
+ggtitle("algae$a1") + theme(title = bold_text_20, axis.title = bold_text_20, axis.text = bold_text_20)
+```
+
+
+So should we always go with the median?
+========================================================
+
+&nbsp;
+
+```{r, echo=FALSE}
+betas <- rbeta(100,.5,.5)
+ggplot(data.frame(x=betas), aes(x = x)) + geom_histogram(bins = 20) +
+  geom_vline(aes(xintercept = mean(x), linetype = "mean"), color = 'red') + 
+  geom_vline(aes(xintercept = median(x), linetype = "median"), color = 'green') + 
+  scale_linetype_manual(name = "statistic", values = c(2, 2), 
+                      guide = guide_legend(override.aes = list(color = c("red", "green")))) +
+  ylab("count")  + ggtitle("A bimodal distribution") + theme(title = bold_text_20, axis.title = bold_text_20, axis.text = bold_text_20)
+```
+
+
+Boxplots are a way to summarize a complete distribution
+========================================================
+
+&nbsp;
+
+The median is the fat black line. The green and blue lines have been added to indicate the mean and the mode.
+Do you know which is which?
+
+```{r, echo=FALSE}
+mod <-algae %>% group_by(a1) %>% summarize(n = n()) %>% arrange(desc(n)) %>% select(a1) %>% head(1)
+ggplot(algae, aes(x = 1, y = a1))  + geom_boxplot() + 
+  geom_hline(aes(yintercept = mean(algae$a1)), color = "green", linetype=2) + 
+  geom_hline(aes(yintercept = mod), color = "blue", linetype=4)  + 
+  ylab("")  +
+ggtitle("algae$a1") + theme(title = bold_text_20, axis.title = bold_text_20, axis.text = bold_text_20)
+```
+
+
+Does a boxplot always help?
+========================================================
+
+&nbsp;
+
+We've added a rug on the left to show where the data points lie.
+This would be hard to guess from the boxplot alone.
+
+```{r, echo=FALSE}
+ ggplot(data_frame(y = betas), aes(x = 1, y = betas)) + geom_boxplot() + geom_rug() +
+  ylab("") + ggtitle("A bimodal distribution") + theme(title = bold_text_20, axis.title = bold_text_20, axis.text = bold_text_20)
+
+```
+
+
+Bringing out the music in data - violin plots
+========================================================
+
+&nbsp;
+
+```{r, echo=FALSE, fig.width=8}
+ ggplot(data_frame(y = betas), aes(x = 1, y = betas)) + geom_violin() + geom_rug() + 
+  ylab("") + ggtitle("A bimodal distribution") + theme(title = bold_text_20, axis.title = bold_text_20, axis.text = bold_text_20)
+
+```
+
+
+Visualizing relations with scatterplots
+========================================================
+
+&nbsp;
+
+A scatterplot shows how two variables relate to each other.
+
+Density curves, plotted parallel to the x- and y axes, help to keep track of the univariate densities.
+
+&nbsp;
+
+```{r, echo=FALSE}
+library(ggthemes)
+library(ggExtra)
+g1 <- ggplot(algae, aes(x = oPO4, y = a1)) + geom_point() +
+  theme_tufte(ticks=F) + theme(axis.title=element_blank(), axis.text=element_blank())
+g1 <- g1 %>% ggMarginal(type = "density") 
+g1
+```
+
+
+How can I visualize multidimensional data?
+========================================================
+
+nbsp;
+
+t-SNE (_t-Distributed Stochastic Neighbor Embedding_) is a relatively new, effectful visualization algorithm especially suited for non-linear data.
+
+The example data shown below are satellite data, with 36 predictors available to predict the nature of the ground.
+
+```{r, echo=FALSE}
+library(readr)
+library(Rtsne)
+# https://archive.ics.uci.edu/ml/datasets/Statlog+%28Landsat+Satellite%29
+sat <- read_delim("sat.trn", delim = " ", col_names = FALSE)
+sat_data <- sat %>% select(-X37)
+tsne_out <- Rtsne(sat_data) 
+plot(tsne_out$Y,col=sat$X37, xlab = "", ylab="", xaxt='n', yaxt='n')
+```
 
 
 
@@ -345,6 +947,8 @@ type:prompt
 <h1>
 Important concepts in statistical modeling
 </h1>
+<h3>Overfitting, bias/variance trade-off, and model selection
+</h3>
 
 
 Training error, test error, and overfitting
