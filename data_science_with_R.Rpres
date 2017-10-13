@@ -61,18 +61,15 @@ knitr::opts_chunk$set(fig.width=16, fig.height=8, fig.path='Figs/',
 
 ### Part 1: Concepts, basics, methods
 
+&nbsp;
+
 - Lost in terminology?
 - Introduction to statistical modeling
-    - supervised vs. unsupervised learning
-    - regression vs. classification
-    - prediction vs. inference 
+    - supervised vs. unsupervised learning, regression vs. classification, prediction vs. inference 
 - R for data science, a short introduction
 - Exploratory data analysis 
 - Important concepts in statistical modeling
-    - overfitting
-    - bias/variance trade-off
-    - model selection
-- Some statistical background
+    - overfitting, bias/variance trade-off, model selection
 - Introduction to supervised learning (regression): Linear regression
 - Introduction to supervised learning (classification): Logistic regression
 
@@ -86,20 +83,21 @@ class:smalltext
 
 ### Part 1 (cont.)
 
+&nbsp;
+
 - More algorithms:
-    - regression and classification trees
-    - support vector machines
-    - k-nearest-neighbors
+    - regression and classification trees, support vector machines, k-nearest-neighbors
 - Ensemble methods
 - Model selection revisited
-    - cross-validation
-    - subset selection
-    - regularization 
+    - cross-validation, subset selection, regularization 
 - Introduction to unsupervised learning:
-    - clustering
-    - principal components analysis (PCA)
+    - clustering, principal components analysis (PCA)
     
+&nbsp;
+
 ### Part 2: Case study
+
+&nbsp;
 
 From data to models: fraud  detection
 
@@ -124,14 +122,14 @@ The classic: Drew Conway's original Data Science Venn diagram
 
 
 <figure>
-<img src="Data_Science_VD.png">
+<img src="pics/Data_Science_VD.png">
 <figcaption>Source:http://drewconway.com/zia/2013/3/26/the-data-science-venn-diagram
 </figcaption>
 </figure>
 
 
 
-One of it's many successors...
+One of its many successors...
 ========================================================
 
 &nbsp;
@@ -139,7 +137,7 @@ One of it's many successors...
 
 
 <figure>
-<img src="data-scientist-venn-diagram.png">
+<img src="pics/data-scientist-venn-diagram.png">
 <figcaption>Source: http://www.kdnuggets.com/2016/09/new-data-science-venn-diagram.html
 </figcaption>
 </figure>
@@ -152,7 +150,7 @@ One of it's many successors...
 
 
 <figure>
-<img src="data-science-puzzle-2017.jpg">
+<img src="pics/data-science-puzzle-2017.jpg">
 <figcaption>Source: http://www.kdnuggets.com/2017/01/data-science-puzzle-revisited.html
 </figcaption>
 </figure>
@@ -242,10 +240,12 @@ Example: Advertising
 
 &nbsp;
 
-Does advertising help sales? How much? What about the different channels - should we advertise on TV? Radio? Newspapers?
+Does advertising help sales? How much? 
+
+What about the different channels - should we advertise on TV? Radio? Newspapers?
 
 <figure>
-<img src="2.1.jpg">
+<img src="pics/2.1.jpg" width="50%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -259,7 +259,7 @@ Example: Income
 Does income increase with education? How much?
 
 <figure>
-<img src="2.2.jpg">
+<img src="pics/2.2.jpg" width="50%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -274,7 +274,7 @@ Example: Clustering gene expression measurements for cancer cells
 &nbsp;
 
 <figure>
-<img src="1.4.jpg">
+<img src="pics/1.4.jpg" width="50%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -359,7 +359,7 @@ Prediction accuracy vs. model interpretability
 By method
 
 <figure>
-<img src="2.7.jpg">
+<img src="pics/2.7.jpg" width="50%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -380,7 +380,6 @@ R for data science
 
 From S to R
 ========================================================
-class:smalltext
 
 &nbsp;
 
@@ -409,7 +408,8 @@ The R ecosystem
 - CRAN (Comprehensive R Archive Network): repository with more than 10,000 user-contributed packages
 - RStudio: most popular R IDE (can do “everything” in RStudio)
 - If you can just choose one person to stand for it all: Hadley Wickham (Chief Scientist at RStudio), creator of the _tidyverse_
-- Books: many. We will partly use examples from _R for Data Science_ by the above Hadley Wickham 
+- Books: many. Recommended e.g.: <a href="http://r4ds.had.co.nz/">_R for Data Science_</a> by Hadley Wickham,
+<a href="http://adv-r.hadley.nz/">Advanced R</a> also by Hadley Wickham, <a href="https://bookdown.org/rdpeng/RProgDA/">Mastering software development in R</a> by Roger Peng
 
 
 Why R (for data science)
@@ -422,7 +422,7 @@ Why R (for data science)
 - elegant, concise syntax, esp. when using packages from the _tidyverse_
 - quickly try out things and experiment on the (RStudio) Console
 - beautiful graphics
-- (personal opinion) programming R is fun!
+- (personal opinion) programming in R is fun!
 
 
 Getting started with R (1)
@@ -548,7 +548,7 @@ mylist[["chars"]] # way 2
 ```
 
 
-Getting started with R (4)
+Getting started with R (5)
 ========================================================
 class:smallcode
 
@@ -574,7 +574,7 @@ mtcars$cyl[2]
 ```
 
 
-Getting started with R (5)
+Getting started with R (6)
 ========================================================
 class:smallcode
 
@@ -605,7 +605,7 @@ diamonds %>% filter(cut == "Premium" & depth > 62.4) %>% group_by(color) %>% sum
 ```
 
 
-Getting started with R (5)
+Getting started with R (7)
 ========================================================
 class:smallcode
 
@@ -662,7 +662,7 @@ class:smallcode
 ... as shown by $R^2$ in 4 datasets:
 
 ```{r}
-# spoiler... this is not about income, but it's the famous Anscombe dataset
+# spoiler... this is not about income, this is the famous Anscombe dataset
 data("anscombe")
 summary(lm(y1 ~ x1, data = anscombe))$r.squared
 summary(lm(y2 ~ x2, data = anscombe))$r.squared
@@ -719,6 +719,7 @@ str(algae)
 
 Getting to know the dataset (2)
 ========================================================
+class:smallcode
 
 &nbsp;
 
@@ -731,6 +732,7 @@ summary(algae)
 
 Getting to know the dataset (3)
 ========================================================
+class:smallcode
 
 &nbsp;
 
@@ -744,6 +746,7 @@ algae %>% summarise_all(funs(sum(is.na(.))))
 
 Getting to know the dataset (4)
 ========================================================
+class:smallcode
 
 &nbsp;
 
@@ -756,6 +759,7 @@ algae %>% select_if(is.numeric) %>% filter_all(all_vars(!is.na(.))) %>% cor()
 
 Getting to know the dataset (5)
 ========================================================
+class:smallcode
 
 &nbsp;
 
@@ -813,17 +817,18 @@ What is a good summary?
 
 Mean vs. median (2)
 
+
 ```{r, echo=FALSE}
 bold_text_20 <- element_text(face = "bold", size = 20)
 ggplot(algae, aes(x = a1)) + geom_density(na.rm = TRUE) +
   geom_vline(aes(
-  xintercept = mean(algae$mxPH, na.rm = TRUE),
+  xintercept = mean(algae$a1, na.rm = TRUE),
   linetype = "mean"
-  ), color = 'red') +
+  ), color = "red") +
   geom_vline(aes(
-  xintercept = median(algae$mxPH, na.rm = TRUE),
+  xintercept = median(algae$a1, na.rm = TRUE),
   linetype = "median"
-  ), color = 'green') +
+  ), color = "green") +
   scale_linetype_manual(
   name = "statistic",
   values = c(2, 2),
@@ -873,6 +878,8 @@ Does a boxplot always help?
 
 &nbsp;
 
+This is a boxplot for the bimodal distribution a few slides ago.
+
 We've added a rug on the left to show where the data points lie.
 This would be hard to guess from the boxplot alone.
 
@@ -888,7 +895,7 @@ Bringing out the music in data - violin plots
 
 &nbsp;
 
-```{r, echo=FALSE, fig.width=8}
+```{r, echo=FALSE, fig.width=6}
  ggplot(data_frame(y = betas), aes(x = 1, y = betas)) + geom_violin() + geom_rug() + 
   ylab("") + ggtitle("A bimodal distribution") + theme(title = bold_text_20, axis.title = bold_text_20, axis.text = bold_text_20)
 
@@ -906,7 +913,7 @@ Density curves, plotted parallel to the x- and y axes, help to keep track of the
 
 &nbsp;
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, fig.width=8}
 library(ggthemes)
 library(ggExtra)
 g1 <- ggplot(algae, aes(x = oPO4, y = a1)) + geom_point() +
@@ -919,7 +926,7 @@ g1
 How can I visualize multidimensional data?
 ========================================================
 
-nbsp;
+&nbsp;
 
 t-SNE (_t-Distributed Stochastic Neighbor Embedding_) is a relatively new, effectful visualization algorithm especially suited for non-linear data.
 
@@ -953,6 +960,7 @@ Important concepts in statistical modeling
 
 Training error, test error, and overfitting
 ========================================================
+class:smalltext
 
 &nbsp;
 
@@ -961,7 +969,7 @@ A model that minimizes training error but incurs high test error is said to _ove
 While good performance on the training set is nice, the thing we really care about is _low error on the test set_ (low _generalization error_).
 
 <figure>
-<img src="2.9.jpg">
+<img src="pics/2.9.jpg" width="50%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -970,6 +978,7 @@ Example: three fits (true data in black) with corresponding training and test er
 
 There is no such thing as overall optimal complexity (1)
 ========================================================
+class:smalltext
 
 &nbsp;
 
@@ -978,7 +987,7 @@ Three unequal-complexity models with training and test errors
 _moderately nonlinear data_
 
 <figure>
-<img src="2.9.jpg">
+<img src="pics/2.9.jpg" width="50%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -987,6 +996,7 @@ Example: three fits (true data in black) with corresponding training and test er
 
 There is no such thing as overall optimal complexity (2)
 ========================================================
+class:smalltext
 
 &nbsp;
 
@@ -995,7 +1005,7 @@ Three unequal-complexity models with training and test errors
 _highly linear data_
 
 <figure>
-<img src="2.10.jpg">
+<img src="pics/2.10.jpg" width="50%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1004,6 +1014,7 @@ Example: three fits (true data in black) with corresponding training and test er
 
 There is no such thing as overall optimal complexity (3)
 ========================================================
+class:smalltext
 
 &nbsp;
 
@@ -1012,7 +1023,7 @@ Three unequal-complexity models with training and test errors
 _very nonlinear data_
 
 <figure>
-<img src="2.11.jpg">
+<img src="pics/2.11.jpg" width="50%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1048,11 +1059,12 @@ $E(y_0 - \hat f(x_0))^2 = var(\hat f(x_0)) + (bias(\hat f(x_0)))^2 + var(\epsilo
 
 Bias-variance tradeoff (2)
 ========================================================
+class:smalltext
 
 &nbsp;
 
 <figure>
-<img src="2.12.jpg">
+<img src="pics/2.12.jpg" width="50%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1081,7 +1093,7 @@ How cross-validation works
 Example: 5-fold cross-validation.
 
 <figure>
-<img src="5.5.jpg">
+<img src="pics/5.5.jpg" width="50%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1108,7 +1120,7 @@ In simple (= single-predictor) linear regression we fit a line to the data:
 $\hat y = \beta_0 + \beta_1 x$
 
 <figure>
-<img src="2.1.jpg">
+<img src="pics/2.1.jpg" width="50%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1124,7 +1136,7 @@ The most common approach by far is _least squares_ where we minimize the _residu
 $(y_1 - \hat \beta_0 - \hat \beta_1 x_1)^2 + (y_2 - \hat \beta_0 - \hat \beta_1 x_2)^2 + ... + (y_n - \hat \beta_0 - \hat \beta_1 x_n)^2$
 
 <figure>
-<img src="3.1.jpg">
+<img src="pics/3.1.jpg" width="50%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1154,7 +1166,7 @@ How good is the model fit?
 
 Model performance in the one-predictor case is usually assessed by calculating the proportion of variance explained:
 
-$R^2 = \frac{total sum of squares - residual sum of squares}{total sum of squares} = 1 - \frac{residual sum of squares}{total sum of squares}$
+$R^2 = \frac{total\: sum\: of\: squares\: -\: residual\: sum\: of\: squares\:}{total\: sum\: of\: squares\:} = 1 - \frac{residual\: sum\: of\: squares}{total\: sum\: of\: squares\:}$
 
 This $R^2$ is the square of the correlation coefficient $R$.
 
@@ -1169,7 +1181,7 @@ With n predictors, we don't fit a line any more, but an n-dimensional hyperplane
 This is an example of the regression of a hypothetical $y$ on two hypothetical predictors $x_1$ and $x_2$.
 
 <figure>
-<img src="3.4.jpg">
+<img src="pics/3.4.jpg" width="40%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1177,6 +1189,7 @@ This is an example of the regression of a hypothetical $y$ on two hypothetical p
 
 What it means
 ========================================================
+incremental:true
 
 &nbsp;
 
@@ -1208,6 +1221,7 @@ Predictions from linear regression
 &nbsp;
 
 Like for any machine learning model, predictions from least squares should always include _prediction intervals_.
+
 If we are predicting averages, not individual examples, _confidence intervals_ will do, too.
 
 
@@ -1221,7 +1235,7 @@ It is still possible to use linear regression, using non-linear transformations 
 $mpg = \beta_0 + \beta_1 * horsepower + \beta_2 * horsepower^2 + \epsilon$
 
 <figure>
-<img src="3.8.jpg">
+<img src="pics/3.8.jpg" width=40%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1233,8 +1247,8 @@ Linear regression
 
 &nbsp;
 
-- lab
-- exercises
+- lab_linear_regression.R
+- exercises_linear_regression.R
 
 
 ========================================================
@@ -1260,7 +1274,7 @@ Why we cannot just use linear regression
 - but we would obtain some strange predictions...
 
 <figure>
-<img src="4.2.jpg">
+<img src="pics/4.2.jpg" width="50%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1283,10 +1297,10 @@ $p(X) = \frac{e^{\beta_0 + \beta_1X}}{1 + e^{\beta_0 + \beta_1X}}$
 
 $log(\frac{p(X)}{1-p(X)}) = \beta_0 + \beta_1 X$
 
-- this means that with a one-unit increase in X is associated an increase in the _log-odds_ of $\beta_1$
+- this means that with a one-unit increase in X is associated a 1-unit increase in the _log-odds_ of $\beta_1$
 
 
-Not all errors are born equal in classification
+In classification, not all errors are born equal 
 ========================================================
 
 &nbsp;
@@ -1299,9 +1313,8 @@ $accuracy = \frac{number\>correctly\>classified}{number\>misclassified}$
 - therefore, we want to look at the _confusion matrix_ that shows all 4 possibilities
 - what would you think of the following confusion matrix for credit card default data?
 
-
 <figure>
-<img src="table_4_4.png">
+<img src="pics/table_4_4.png" width="50%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1338,7 +1351,7 @@ ROC Curves
 The _area under the ROC curve_ (_AUC_) measures the overall performance of a classifier.
 
 <figure>
-<img src="4.8.jpg">
+<img src="pics/4.8.jpg" width="40%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1354,7 +1367,7 @@ In two dimensions, it is possible to display a classifier's decision boundary.
 Here are decision boundaries for two classifiers, a linear and a non-linear one (the dashed line representing the theoretical optimum):
 
 <figure>
-<img src="4.9.jpg">
+<img src="pics/4.9.jpg" width="50%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1365,8 +1378,8 @@ Logistic regression
 
 &nbsp;
 
-- lab
-- exercises
+- lab_logistic_regression.R
+- exercises_logistic_regression.R
 
 
 ========================================================
@@ -1394,7 +1407,7 @@ Decision trees
 A simple regression tree for prediction of (log) salary of baseball players:
 
 <figure>
-<img src="8.1.jpg" width="30%">
+<img src="pics/8.1.jpg" width="30%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1410,7 +1423,7 @@ Regression trees - rationale
 Here is the partitioning into regions for the baseball players example:
 
 <figure>
-<img src="8.2.jpg" width="30%">
+<img src="pics/8.2.jpg" width="30%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1425,7 +1438,7 @@ Danger zone!
 If we follow that strategy blindly, we end up _overfitting_ the dataset, as with this tree:
 
 <figure>
-<img src="8.4.jpg" width="30%">
+<img src="pics/8.4.jpg" width="40%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1442,7 +1455,7 @@ With cost complexity pruning, we obtain the optimal tree size trading off comple
 $$\sum_{m=1}^{|T|} \sum_{i: x_i \epsilon R_m} (y_i - \hat y_{R_m})^2 + \alpha|T|$$
 
 <figure>
-<img src="tree_algo.png" width="30%">
+<img src="pics/tree_algo.png" width="50%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1466,7 +1479,7 @@ Classification tree example: Detecting heart disease
 &nbsp;
 
 <figure>
-<img src="8.6.jpg" width="30%">
+<img src="pics/8.6.jpg" width="50%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1482,7 +1495,7 @@ Trees versus linear models
 In a concrete case, the shape of the true decision boundary plays an important role:
 
 <figure>
-<img src="8.7.jpg" width="30%">
+<img src="pics/8.7.jpg" width="30%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1494,7 +1507,7 @@ Decision trees
 
 &nbsp;
 
-- lab
+- lab_decision_trees.R
 
 
 Support vector machines
@@ -1502,7 +1515,7 @@ Support vector machines
 
 &nbsp;
 
-- Support vector machines have been _the hype_ out there until the event deep learning.
+- Support vector machines have been _the hype_ out there until the event of deep learning.
 - They combine the _maximal margin_ principle with _kernels_ that allow for handling all kinds of non-linear data.
 
 
@@ -1517,7 +1530,7 @@ For all red points, $1 + 2X_1 + 3X_2 < 0$, while for all blue points, $1 + 2X_1 
 
 
 <figure>
-<img src="9.1.jpg" width="20%">
+<img src="pics/9.1.jpg" width="20%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1528,7 +1541,7 @@ But there are many potential separating hyperplanes...
 &nbsp;
 
 <figure>
-<img src="9.2.jpg" width="30%">
+<img src="pics/9.2.jpg" width="30%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1541,7 +1554,7 @@ Linearly separable datasets: the maximal margin classifier
 The maximal margin hyperplane depends only on the _support vectors_ (shown with arrows), not on any other observations from the dataset!
 
 <figure>
-<img src="9.3.jpg" width="30%">
+<img src="pics/9.3.jpg" width="30%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1557,7 +1570,7 @@ Most datasets are not linearly separable.
 In fact, even if they are, a separating hyperplane may not always be the right choice!
 
 <figure>
-<img src="9.5.jpg" width="30%">
+<img src="pics/9.5.jpg" width="30%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1574,7 +1587,7 @@ The support vector classifier allows for some points to be misclassified, subjec
 Observations may be on the wrong side of the margin, and even on the wrong side of the hyperplane:
 
 <figure>
-<img src="9.6.jpg" width="30%">
+<img src="pics/9.6.jpg" width="30%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1591,7 +1604,7 @@ Depending on the tuning parameter for the "misclassification budget", the result
 - small "misclassification budget": few support vectors, high variance, low bias
 
 <figure>
-<img src="9.7.jpg" width="20%">
+<img src="pics/9.7.jpg" width="20%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1605,7 +1618,7 @@ From support vector classifier to support vector machine
 No linear classifier can possibly account for this scenario...
 
 <figure>
-<img src="9.8.jpg" width="20%">
+<img src="pics/9.8.jpg" width="20%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1621,7 +1634,7 @@ Support vector machines model non-linear decision boundaries using _kernels_ (su
 This is how SVMs with polynomial resp. radial kernel handle the above problem:
 
 <figure>
-<img src="9.9.jpg" width="20%">
+<img src="pics/9.9.jpg" width="20%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1632,15 +1645,7 @@ Support vector machine
 
 &nbsp;
 
-- lab
-
-Support vector machines
-========================================================
-
-&nbsp;
-
-- Support vector machines have been _the hype_ out there until the event deep learning.
-- They combine the _maximal margin_ principle with _kernels_ that allow for handling all kinds of non-linear data.
+- lab_svm.R
 
 
 K-nearest neighbors (KNN)
@@ -1655,7 +1660,7 @@ A test point is classified (or assigned a prediction value) according to the k _
 Note: there are no separate training and test phases!
 
 <figure>
-<img src="knn.png" width="10%">
+<img src="pics/knn.png" width="10%">
 <figcaption>Source: Wikipedia.
 </figcaption>
 </figure>
@@ -1671,7 +1676,7 @@ The KNN decision boundary (and thus, the position taken in the bias-variance tra
 Left: k=1, right: k=100
 
 <figure>
-<img src="2.16.jpg" width="20%">
+<img src="pics/2.16.jpg" width="40%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1681,7 +1686,7 @@ K-nearest neighbors (KNN)
 
 &nbsp;
 
-- lab
+- lab_knn_classification.R
 
 
 ========================================================
@@ -1735,7 +1740,7 @@ Boosting
 
 - does not involve bootstrap sampling
 - instead, builds a sequence of decision trees, where each new tree improves over the weaknesses of the previous ones
-- i.e., a succession of "slow learners"
+- i.e., builds a succession of "slow learners"
 - each single tree often has very small depth (up to "decision stumps")
 
 How about interpretability?
@@ -1747,7 +1752,7 @@ How about interpretability?
 Even though with ensemble methods like random forests we lose the ease of visual inspection, we can still obtain a graph of _variable importance_, as in this example:
 
 <figure>
-<img src="8.9.jpg" width="30%">
+<img src="pics/8.9.jpg" width="30%">
 <figcaption>Source: G. James, D. Witten, T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1758,7 +1763,7 @@ Ensemble methods
 
 &nbsp;
 
-- lab
+- lab_ensemble_methods.R
 
 
 ========================================================
@@ -1779,7 +1784,7 @@ Cross-validation
 
 &nbsp;
 
-- lab
+- lab_cross_validation.R
 
 
 Subset selection
@@ -1787,18 +1792,183 @@ Subset selection
 
 &nbsp;
 
-- lab
+- lab_subset_selection.R
 
-
-Regularization
-========================================================
-
-- TBD
 
 Regularization
 ========================================================
 
 &nbsp;
 
-- lab
+- lab_ridge_lasso.R
+
+========================================================
+type:prompt
+
+&nbsp; 
+
+&nbsp; 
+
+<h1>
+Introduction to unsupervised learning
+</h1>
+<h3>Clustering and Principal Components Analysis
+</h3>
+
+K-means clustering
+========================================================
+
+&nbsp;
+
+Idea: Within-cluster variation should be small.
+
+However, as it's unsupervised learning, the number of clusters is not a given!
+
+In this example, what should k be?
+
+<figure>
+<img src="pics/10.5.jpg" width="40%">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+K-means algorithm
+========================================================
+
+&nbsp;
+
+Alternating steps:
+- compute cluster centroid
+- assign data points to nearest cluster (by Euclidean distance)
+
+<figure>
+<img src="pics/10.6.jpg" width="40%">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+Local optima
+========================================================
+
+&nbsp;
+
+Random initialization of cluster assignments affects the outcome.
+
+Here are the results from six runs of K-means. In four cases, a local optimum was reached.
+
+
+<figure>
+<img src="pics/10.7.jpg" width="40%">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+Hierarchical Clustering
+========================================================
+
+&nbsp;
+
+With hierarchical clustering, we don't have to decide on the number of clusters in advance.
+
+We can cut the dendrogram (that results from the clustering algorithm) at different places:
+
+<figure>
+<img src="pics/10.9.jpg" width="40%">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+How to read a dendrogram
+========================================================
+
+&nbsp;
+
+Items that are near each other _vertically_ are similar.
+
+_Horizontal proximity_ on the other hand says nothing about similarity!
+
+<figure>
+<img src="pics/10.10.jpg" width="40%">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+Hierarchical Clustering - algorithm
+========================================================
+
+&nbsp;
+
+Illustration of the algorithm (complete linkage, Euclidean distance):
+
+<figure>
+<img src="pics/10.11.jpg" width="40%">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+Hierarchical Clustering - linkage
+========================================================
+
+&nbsp;
+
+How distance is measured makes a difference.
+
+Clusters resulting from average, complete, and single linkage, respectively:
+
+<figure>
+<img src="pics/10.12.jpg" width="40%">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+Clustering
+========================================================
+
+&nbsp;
+
+- lab_clustering.R
+
+
+Principal components analysis
+========================================================
+
+&nbsp;
+
+PCA finds an equivalent representation of the data where each _principal component_ explains a maximal amount of variance and is orthogonal to all other principal components.
+
+For explanation and display, we often focus on just the first few principal components:
+
+<figure>
+<img src="pics/10.1.jpg" width="40%">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+How many principal components to discuss?
+========================================================
+
+&nbsp;
+
+Scree plots show the proportion of variance explained by successive principal components.
+
+<figure>
+<img src="pics/10.4.jpg" width="40%">
+<figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
+</figcaption>
+</figure>
+
+
+Principal Components Analysis
+========================================================
+
+&nbsp;
+
+- lab_pca.R
 
