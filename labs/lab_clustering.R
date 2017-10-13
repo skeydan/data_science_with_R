@@ -11,7 +11,7 @@ set.seed(2)
 # there are 2 real clusters
 X <- matrix(rnorm(50*2), ncol=2)
 X[1:25,1] <- X[1:25,1]+3
-X[1:25,2] <- x[1:25,2]-4
+X[1:25,2] <- X[1:25,2]-4
 
 # k = 2
 km_out <- kmeans(X,2,nstart=20)
@@ -120,3 +120,4 @@ km_clusters <- km_out$cluster
 
 # compare the cluster assignments
 table(km_clusters,hc_clusters)
+
