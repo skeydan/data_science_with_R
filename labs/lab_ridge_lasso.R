@@ -53,7 +53,7 @@ ridge_pred <- predict(ridge_mod, s = 4, newx = X[test, ])
 mean((ridge_pred - y_test)^2)
 # get MSE on test set for lambda = 10^10 - this is the same as just fitting an intercept
 ridge_pred <- predict(ridge_mod, s = 1e10, newx=X[test,])
-mean((ridge_pred-y.test)^2)
+mean((ridge_pred-y_test)^2)
 # the least squares fit
 ridge_pred <- predict(ridge_mod, s = 0, newx=X[test,], exact=T, x = X[train, ], y = y[train] )
 mean((ridge_pred - y_test)^2)
