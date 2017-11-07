@@ -174,7 +174,7 @@ sales$Uprice <- sales$Val/sales$Quant
 ### some products have very few transactions: can we perhaps analyze some products together?
 # we would like to merge products with similar distributions
 
-# basic precondition for dists to be similar: simila median, similar IQR
+# basic precondition for dists to be similar: similar median, similar IQR
 
 ##
 ms <- filter(sales,Insp != "fraud") %>% 
@@ -252,7 +252,8 @@ ranked_obs <- c("fraud", "unk", "fraud", "fraud", "unk", "ok", "ok")
 
 # if we could inspect just 2 reports, this would be equivalent to having predicted
 preds_effort_budget_2 <- c("fraud", "fraud", "ok", "ok", "ok", "ok", "ok")
-ranked_obs_unk_as_ok <-  ranked_obs; ranked_obs_unk_as_ok[ranked_obs=="unk"] <- "ok"
+ranked_obs_unk_as_ok <-  ranked_obs
+ranked_obs_unk_as_ok[ranked_obs=="unk"] <- "ok"
 # confusion matrix would then be
 table(ranked_obs_unk_as_ok, preds_effort_budget_2)
 
@@ -321,7 +322,7 @@ avgNDTP <- function(toInsp,train,stats) {
 
 #### sub-section:  Experimental Methodology
 
-## custom evaluation procedure yields recision, recall, and NDTP
+## custom evaluation procedure yields precision, recall, and NDTP
 evalOutlierRanking <- function(testSet,rankOrder,Threshold,statsProds,...) 
 {
    ordTS <- testSet[rankOrder,]
@@ -385,7 +386,7 @@ summary(bp.res)
 # how to read this?
 # 52% of known frauds are included in top 10% reports by the boxplot rule: this is not good
 # is 10% effort not enough? --> no: precision is very low
-# howeverm avg NDTP is quite high
+# however avg NDTP is quite high
 
 ## now check PR curves and cumulative recall curves for efficacy of different inspection efforts
 # rate of positive predictions == measure of how many tx to inspect
@@ -400,7 +401,7 @@ CRchart(ps.bp,ts.bp,main='Cumulative Recall curve',avg='vertical')
 ############################################################################################
 
 
-# How to handle categorical data? LOF handles categorical data only
+# How to handle categorical data? LOF handles numerical data only
 # salesman id will be eliminated
 # products will be handled one-by-one
 # 
@@ -456,7 +457,7 @@ legend('bottomright',c('BPrule','LOF'),lty=c(1,2))
 
 
 ############################################################################################
-###-------------------------------Hierarchical aggomerative clustering-------------------###
+###-------------------------------Hierarchical agglomerative clustering-------------------###
 ############################################################################################
 
 

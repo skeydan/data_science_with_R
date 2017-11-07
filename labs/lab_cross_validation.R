@@ -18,7 +18,7 @@ coef(fit)
 
 ?cv.glm # needs results of a fit
 # cv.glm(data, glmfit, cost, K)
-# default for cost is MSE, default for k = n (LOOVC)
+# default for cost is MSE, default for k = n (LOOCV)
 fit <- glm(mpg ~ horsepower, data = Auto)
 fit
 cv_err <- cv.glm(Auto, fit)
