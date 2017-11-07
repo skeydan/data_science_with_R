@@ -52,10 +52,23 @@ Agenda
 class:smalltext
 
 ```{r global_options, include=FALSE}
-knitr::opts_chunk$set(fig.width=16, fig.height=8, fig.path='Figs/',
+knitr::opts_chunk$set(fig.width=14, fig.height=6, fig.path='Figs/',
                       warning=FALSE, message=FALSE,
                       cache = TRUE)
+
 ```
+
+```{r, results="hide", echo=FALSE}
+library(dplyr)
+library(readr)
+library(Rtsne)
+library(ggplot2)
+library(GGally)
+library(DMwR2)
+library(ggthemes)
+library(ggExtra)
+```
+
 
 &nbsp;
 
@@ -64,16 +77,13 @@ knitr::opts_chunk$set(fig.width=16, fig.height=8, fig.path='Figs/',
 &nbsp;
 
 - Lost in terminology?
-- Introduction to statistical modeling
-    - supervised vs. unsupervised learning, regression vs. classification, prediction vs. inference 
+- Data science in practice
+- Introduction to statistical modeling: supervised vs. unsupervised learning, regression vs. classification, prediction vs. inference 
 - R for data science, a short introduction
 - Exploratory data analysis 
-- Important concepts in statistical modeling
-    - overfitting, bias/variance trade-off, model selection
+- Important concepts in statistical modeling: overfitting, bias/variance trade-off, model selection
 - Introduction to supervised learning (regression): Linear regression
 - Introduction to supervised learning (classification): Logistic regression
-
-
 
 Agenda (cont.)
 ========================================================
@@ -85,13 +95,10 @@ class:smalltext
 
 &nbsp;
 
-- More algorithms:
-    - regression and classification trees, support vector machines, k-nearest-neighbors
+- More algorithms: regression and classification trees, support vector machines, k-nearest-neighbors
 - Ensemble methods
-- Model selection revisited
-    - cross-validation, subset selection, regularization 
-- Introduction to unsupervised learning:
-    - clustering, principal components analysis (PCA)
+- Model selection revisited: cross-validation, subset selection, regularization 
+- Introduction to unsupervised learning: clustering, principal components analysis (PCA)
     
 &nbsp;
 
@@ -150,7 +157,7 @@ One of its many successors...
 
 
 <figure>
-<img src="pics/data-science-puzzle-2017.jpg">
+<img src="pics/data-science-puzzle-2017.jpg" width="60%">
 <figcaption>Source: http://www.kdnuggets.com/2017/01/data-science-puzzle-revisited.html
 </figcaption>
 </figure>
@@ -218,6 +225,46 @@ Machine learning / deep learning is taking over decision making in super importa
 - ...
 
 We definitely need interpretability / explanations!
+
+
+========================================================
+type:prompt
+
+&nbsp; 
+
+&nbsp; 
+
+<h1>
+Data Science in practice
+</h1>
+
+
+A more real-world view of data science 
+========================================================
+
+&nbsp;
+
+<figure>
+<img src="pics/realistic_ds_diagram.png" width="50%">
+<figcaption>Source: Jerry Overton, Going Pro in Data Science. O'Reilly 2016.</figcaption>
+</figure>
+
+
+The data science process
+========================================================
+
+&nbsp;
+
+
+
+<figure>
+<img src="pics/data_science_process.png" width="50%">
+<figcaption>Source: Jerry Overton, Going Pro in Data Science. O'Reilly 2016.
+</figcaption>
+</figure>
+
+
+
 
 
 ========================================================
@@ -650,7 +697,11 @@ The most important thing about exploratory data analysis
 
 &nbsp;
 
-Do it.
+&nbsp;
+
+&nbsp;
+
+__Do it.__
 
 
 66% of variance in income can be explained by tenure!
@@ -709,7 +760,6 @@ class:smallcode
 What kind of data do we have?
 
 ```{r}
-library(DMwR2)
 data("algae")
 nrow(algae)
 str(algae)
@@ -766,7 +816,6 @@ class:smallcode
 Pairs plot:
 
 ```{r}
-library(GGally)
 algae %>% select_if(is.numeric) %>% select(-(num_range("a", 2:7))) %>% ggpairs()
 ```
 
@@ -883,7 +932,7 @@ This is a boxplot for the bimodal distribution a few slides ago.
 We've added a rug on the left to show where the data points lie.
 This would be hard to guess from the boxplot alone.
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, fig.width=12, fig.height=4}
  ggplot(data_frame(y = betas), aes(x = 1, y = betas)) + geom_boxplot() + geom_rug() +
   ylab("") + ggtitle("A bimodal distribution") + theme(title = bold_text_20, axis.title = bold_text_20, axis.text = bold_text_20)
 
@@ -895,7 +944,7 @@ Bringing out the music in data - violin plots
 
 &nbsp;
 
-```{r, echo=FALSE, fig.width=6}
+```{r, echo=FALSE, fig.height=8, fig.width = 8}
  ggplot(data_frame(y = betas), aes(x = 1, y = betas)) + geom_violin() + geom_rug() + 
   ylab("") + ggtitle("A bimodal distribution") + theme(title = bold_text_20, axis.title = bold_text_20, axis.text = bold_text_20)
 
@@ -907,15 +956,11 @@ Visualizing relations with scatterplots
 
 &nbsp;
 
-A scatterplot shows how two variables relate to each other.
+A scatterplot shows how two variables relate to each other.<br />
+Density curves, plotted parallel to the x- and y axes, can help to keep track of the univariate densities.
 
-Density curves, plotted parallel to the x- and y axes, help to keep track of the univariate densities.
 
-&nbsp;
-
-```{r, echo=FALSE, fig.width=8}
-library(ggthemes)
-library(ggExtra)
+```{r, echo=FALSE, fig.width=6, fig.height=6}
 g1 <- ggplot(algae, aes(x = oPO4, y = a1)) + geom_point() +
   theme_tufte(ticks=F) + theme(axis.title=element_blank(), axis.text=element_blank())
 g1 <- g1 %>% ggMarginal(type = "density") 
@@ -932,16 +977,13 @@ t-SNE (_t-Distributed Stochastic Neighbor Embedding_) is a relatively new, effec
 
 The example data shown below are satellite data, with 36 predictors available to predict the nature of the ground.
 
-```{r, echo=FALSE}
-library(readr)
-library(Rtsne)
+```{r, echo=FALSE, fig.width=10, fig.height=4}
 # https://archive.ics.uci.edu/ml/datasets/Statlog+%28Landsat+Satellite%29
-sat <- read_delim("sat.trn", delim = " ", col_names = FALSE)
+sat <- read_delim("data/sat.trn", delim = " ", col_names = FALSE)
 sat_data <- sat %>% select(-X37)
 tsne_out <- Rtsne(sat_data) 
 plot(tsne_out$Y,col=sat$X37, xlab = "", ylab="", xaxt='n', yaxt='n')
 ```
-
 
 
 ========================================================
@@ -976,7 +1018,7 @@ While good performance on the training set is nice, the thing we really care abo
 
 Example: three fits (true data in black) with corresponding training and test errors
 
-There is no such thing as overall optimal complexity (1)
+There is no such thing as an overall optimal complexity (1)
 ========================================================
 class:smalltext
 
@@ -994,7 +1036,7 @@ _moderately nonlinear data_
 
 Example: three fits (true data in black) with corresponding training and test errors
 
-There is no such thing as overall optimal complexity (2)
+There is no such thing as an overall optimal complexity (2)
 ========================================================
 class:smalltext
 
@@ -1012,7 +1054,7 @@ _highly linear data_
 
 Example: three fits (true data in black) with corresponding training and test errors
 
-There is no such thing as overall optimal complexity (3)
+There is no such thing as an overall optimal complexity (3)
 ========================================================
 class:smalltext
 
@@ -1297,7 +1339,7 @@ $p(X) = \frac{e^{\beta_0 + \beta_1X}}{1 + e^{\beta_0 + \beta_1X}}$
 
 $log(\frac{p(X)}{1-p(X)}) = \beta_0 + \beta_1 X$
 
-- this means that with a one-unit increase in X is associated a 1-unit increase in the _log-odds_ of $\beta_1$
+- this means that with a one-unit increase in X is associated a 1-unit increase in the _log-odds_ of value $\beta_1$
 
 
 In classification, not all errors are born equal 
@@ -1479,7 +1521,7 @@ Classification tree example: Detecting heart disease
 &nbsp;
 
 <figure>
-<img src="pics/8.6.jpg" width="50%">
+<img src="pics/8.6.jpg" width=45%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1842,7 +1884,7 @@ Alternating steps:
 - assign data points to nearest cluster (by Euclidean distance)
 
 <figure>
-<img src="pics/10.6.jpg" width="40%">
+<img src="pics/10.6.jpg" width="25%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1859,7 +1901,7 @@ Here are the results from six runs of K-means. In four cases, a local optimum wa
 
 
 <figure>
-<img src="pics/10.7.jpg" width="40%">
+<img src="pics/10.7.jpg" width="25%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1905,7 +1947,7 @@ Hierarchical Clustering - algorithm
 Illustration of the algorithm (complete linkage, Euclidean distance):
 
 <figure>
-<img src="pics/10.11.jpg" width="40%">
+<img src="pics/10.11.jpg" width="25%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>
@@ -1945,7 +1987,7 @@ PCA finds an equivalent representation of the data where each _principal compone
 For explanation and display, we often focus on just the first few principal components:
 
 <figure>
-<img src="pics/10.1.jpg" width="40%">
+<img src="pics/10.1.jpg" width="35%">
 <figcaption>Source: G. James, D. Witten,  T. Hastie and R. Tibshirani, An Introduction to Statistical Learning, with applications in R (Springer, 2013)
 </figcaption>
 </figure>

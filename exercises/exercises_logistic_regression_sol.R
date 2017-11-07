@@ -42,8 +42,8 @@ summary(fit)
 
 probs <- predict(fit, X_test, type="response")
 preds <- rep("No",200)
-preds[probs > .5] <- "Yes" # threshold at 0.5 isn't of much use
-t <- table(preds, y_test)
+preds[probs > .5] <- "Yes" 
+(t <- table(preds, y_test))
 
 
 # 3

@@ -32,7 +32,7 @@ preds <- rep("Down", 1250)
 preds[probs > .5] <- "Up"
 
 # confusion matrix and accuracy
-table(preds, Smarket$Direction)
+table(preds = preds, actual = Smarket$Direction)
 accuracy <- mean(preds==Smarket$Direction) # a great result but this was obtained on the training set!!
 
 # do it right: split into training and test sets
@@ -45,7 +45,7 @@ fit <- glm(Direction ~ Lag1 + Lag2 + Lag3 + Lag4 + Lag5 + Volume, data = train,f
 probs <- predict(fit, test, type="response")
 preds <- rep("Down", nrow(test))
 preds[probs > .5] <- "Up"
-table(preds, test$Direction)
+table(preds = preds, actual = test$Direction)
 mean(preds == test$Direction) # accuracy
 mean(preds != test$Direction) # error rate
 
@@ -54,7 +54,7 @@ fit <- glm(Direction ~ Lag1 + Lag2, data = train,family = binomial)
 probs <- predict(fit, test,type="response")
 preds <- rep("Down", nrow(test))
 preds[probs > .5] <- "Up"
-table(preds, test$Direction)
+table(preds = preds, actual = test$Direction)
 mean(preds == test$Direction)
 predict(fit, newdata = data.frame(Lag1=c(1.2,1.5),Lag2=c(1.1,-0.8)),type="response")
 
