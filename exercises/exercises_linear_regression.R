@@ -10,7 +10,7 @@ library(GGally)
 
 # sales is in thousands of units
 # TV, radio and newspaper are in thousands of dollars
-advertising <- read_csv("Advertising.csv", col_types = "_dddd")
+advertising <- read_csv("data/Advertising.csv", col_types = "_dddd")
 advertising
 summary(advertising)
 
@@ -52,7 +52,7 @@ ggpairs(advertising)
 ###                      income data                                ###
 #######################################################################
 
-income <- read_csv("Income2.csv", col_types = "_ddd")
+income <- read_csv("data/Income2.csv", col_types = "_ddd")
 income
 
 # Questions
