@@ -852,7 +852,7 @@ ggplot(algae, aes(x = mxPH)) + geom_density(na.rm = TRUE) +
   scale_linetype_manual(
   name = "statistic",
   values = c(2, 2),
-  guide = guide_legend(override.aes = list(color = c("green", "red")))
+  guide = guide_legend(override.aes = list(color = c("red", "green")))
   ) +
   xlab("") + ylab("density") +
 ggtitle("algae$mxPH") + theme(title = bold_text_20, axis.title = bold_text_20, axis.text = bold_text_20)
@@ -881,7 +881,7 @@ ggplot(algae, aes(x = a1)) + geom_density(na.rm = TRUE) +
   scale_linetype_manual(
   name = "statistic",
   values = c(2, 2),
-  guide = guide_legend(override.aes = list(color = c("green", "red")))
+  guide = guide_legend(override.aes = list(color = c("red", "green")))
   ) +
   xlab("") + ylab("density") +
 ggtitle("algae$a1") + theme(title = bold_text_20, axis.title = bold_text_20, axis.text = bold_text_20)
@@ -1349,7 +1349,7 @@ In classification, not all errors are born equal
 
 - the simplest measure of success in classification is _accuracy_, the proportion of correct classifications 
 
-$accuracy = \frac{number\>correctly\>classified}{number\>misclassified}$
+$accuracy = \frac{number\>correctly\>classified}{classifications\>overall}$
 
 - however, errors are either false positives or false negatives, and often it may make a big difference which it is!
 - therefore, we want to look at the _confusion matrix_ that shows all 4 possibilities
