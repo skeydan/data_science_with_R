@@ -72,10 +72,6 @@ library(ggExtra)
 
 &nbsp;
 
-### Part 1: Concepts, basics, methods
-
-&nbsp;
-
 - Lost in terminology?
 - Data science in practice
 - Introduction to statistical modeling: supervised vs. unsupervised learning, regression vs. classification, prediction vs. inference 
@@ -84,30 +80,10 @@ library(ggExtra)
 - Important concepts in statistical modeling: overfitting, bias/variance trade-off, model selection
 - Introduction to supervised learning (regression): Linear regression
 - Introduction to supervised learning (classification): Logistic regression
-
-Agenda (cont.)
-========================================================
-class:smalltext
-
-&nbsp;
-
-### Part 1 (cont.)
-
-&nbsp;
-
 - More algorithms: regression and classification trees, support vector machines, k-nearest-neighbors
 - Ensemble methods
 - Model selection revisited: cross-validation, subset selection, regularization 
 - Introduction to unsupervised learning: clustering, principal components analysis (PCA)
-    
-&nbsp;
-
-### Part 2: Case study
-
-&nbsp;
-
-From data to models: fraud  detection
-
 
 
 ========================================================
@@ -1729,6 +1705,7 @@ K-nearest neighbors (KNN)
 &nbsp;
 
 - lab_knn_classification.R
+- exercises_algorithms.R
 
 
 ========================================================

@@ -21,13 +21,12 @@ ggpairs(advertising)
 # 1
 # Which predictor do you think has most influence on sales - where would you spend the money?
 
-
-# For that channel, is the relationship linear? How good is a linear fit?
 # 2
+# For that channel, is the relationship linear? How good is a linear fit?
 
 
-# Is there a better fit for that variable?
 # 3
+# Is there a better fit for that variable?
 
 
 # 4
@@ -36,7 +35,7 @@ ggpairs(advertising)
 # What happens? Why?
 
 
-#5
+# 5
 # Are the effects of TV advertising and radio advertising independent/additive 
 # or is there some kind of synergy?
 
